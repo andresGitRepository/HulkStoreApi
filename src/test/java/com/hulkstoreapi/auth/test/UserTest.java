@@ -22,6 +22,7 @@ public class UserTest {
 	@Mock
 	private AuthorityRepository authorityRepository;
 
+	
 	private UserServiceImpl userServiceImpl;
 	private User user = new User();
 
