@@ -1,0 +1,51 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title th:inline="text">Hulk Store App - Version  [[${@environment.getProperty('hulkstoreapi.version')}]]</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<link rel="stylesheet" th:href="@{dist/bootstrap-4.0.0/css/bootstrap.css}">
+	<script th:src="@{dist/bootstrap-4.0.0/js/bootstrap.js}"></script>
+	<script th:src="@{dist/jquery/dist/jquery.js}"></script>
+	<script th:src="@{/dist/bootstrap-4.0.0/js/bootstrap-notify.js}"></script>
+	<script th:src="@{/dist/js/message.js}"></script>
+	<script th:src="@{/dist/js/login.js}"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-5 mx-auto">
+				<div id="first">
+					<div class="myform form ">
+						<div class="logo mb-3">
+							<div class="col-md-12 text-center">
+								<h1 th:inline="text">Login - Version [[${@environment.getProperty('hulkstoreapi.version')}]]</h1>
+							</div>
+						</div>
+						<form action="" method="post" name="login">
+							<div class="form-group">
+								<label for="exampleInputEmail1">Email address</label> <input
+									type="email" name="username" class="form-control" id="email"
+									aria-describedby="emailHelp" placeholder="Enter email">
+							</div>
+							<div class="form-group">
+								<label for="exampleInputEmail1">Password</label> <input
+									type="password" name="password" id="password"
+									class="form-control" aria-describedby="emailHelp"
+									placeholder="Enter Password">
+							</div>
+							<div class="col-md-12 text-center ">
+								<button type="submit"
+									class=" btn btn-block mybtn btn-primary tx-tfm">Login</button>
+							</div>
+						</form>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<input th:if="${success} != null" class="invisible" id="logout" th:value="${success}"/>
+	<input th:if="${error} != null" class="invisible" id="error" th:value="${error}"/>
+		
+</body>
+</html>

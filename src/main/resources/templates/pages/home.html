@@ -1,0 +1,15 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title th:inline="text">Marvel App - Home [[${@environment.getProperty('marvel.version')}]]</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<link rel="stylesheet" th:href="@{dist/bootstrap-4.0.0/css/bootstrap.css}">
+	<script th:src="@{dist/bootstrap-4.0.0/js/bootstrap.js}"></script>
+	<script th:src="@{dist/jquery/dist/jquery.js}"></script>
+</head>
+<body>
+	<form class="form-inline my-2 my-md-0" th:action="@{/logout}" method="post">
+		<button class="btn btn-primary btn-block" type="submit">Sign Out</button>
+	</form>
+</body>
+</html>
