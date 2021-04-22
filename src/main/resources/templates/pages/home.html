@@ -1,15 +1,39 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title th:inline="text">Marvel App - Home [[${@environment.getProperty('marvel.version')}]]</title>
+	<title th:inline="text">Hulk Store - Home [[${@environment.getProperty('hulkstoreapi.version')}]]</title>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<link rel="stylesheet" th:href="@{dist/bootstrap-4.0.0/css/bootstrap.css}">
 	<script th:src="@{dist/bootstrap-4.0.0/js/bootstrap.js}"></script>
 	<script th:src="@{dist/jquery/dist/jquery.js}"></script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Hulk Store Api">
+    <meta name="author" content="Andres Gonzalez">
 </head>
 <body>
-	<form class="form-inline my-2 my-md-0" th:action="@{/logout}" method="post">
-		<button class="btn btn-primary btn-block" type="submit">Sign Out</button>
-	</form>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light rounded">
+      <div class="container">
+        <div class="navbar-header">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item"><a class="nav-link active" th:href="@{/home}">Home</a></li>
+				<li class="nav-item"><a class="nav-link" th:href="@{/products}">Productos</a></li>
+				<li class="nav-item"><a class="nav-link" th:href="@{/products-sale}">Ventas</a></li>
+				<li class="nav-item"><a class="nav-link" th:href="@{/products-buy}">Compras</a></li>
+				<li class="nav-item"><a class="nav-link" th:href="@{/products-kardex}">Kardex</a></li>
+			</ul>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+			<form class="form-inline my-2 my-md-0" th:action="@{/logout}" method="post">
+				<button class="btn btn-primary btn-block" type="submit">Sign Out</button>
+			</form>
+        </div>
+      </div>
+    </nav>
+    <div class="container">
+		<hr><hr><hr><hr><hr><hr><hr><hr>
+		<footer>
+		  <p>© 2021 Hulk Store Api v[[${@environment.getProperty('hulkstoreapi.v')}]]</p>
+		</footer>
+    </div> 
 </body>
 </html>

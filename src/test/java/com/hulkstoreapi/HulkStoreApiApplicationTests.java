@@ -1,4 +1,4 @@
-package com.hulkstoreapi.test;
+package com.hulkstoreapi;
 
 import org.junit.Test;
 
