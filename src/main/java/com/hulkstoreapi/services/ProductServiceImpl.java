@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 
 import com.hulkstoreapi.entities.Kardex;
 import com.hulkstoreapi.entities.Product;
-import com.hulkstoreapi.entities.models.ProductModel;
 import com.hulkstoreapi.exceptions.ProductException;
 import com.hulkstoreapi.interfaces.IProductService;
+import com.hulkstoreapi.models.ProductModel;
 import com.hulkstoreapi.repositories.ProductRepository;
 
 import lombok.RequiredArgsConstructor;

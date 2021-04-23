@@ -40,7 +40,7 @@ public class Kardex {
     @Column(name = "kardex_description")
 	private String description;	
     @NotNull
-    @Column(name = "kardex_counter")
+    @Column(name = "kardex_count")
     private BigInteger count;
     
 }

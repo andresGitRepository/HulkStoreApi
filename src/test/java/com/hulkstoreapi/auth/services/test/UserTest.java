@@ -1,4 +1,4 @@
-package com.hulkstoreapi.auth.test;
+package com.hulkstoreapi.auth.services.test;
 
 import static org.junit.Assert.assertEquals;
 

@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import com.hulkstoreapi.entities.Product;
-import com.hulkstoreapi.entities.models.ProductModel;
 import com.hulkstoreapi.exceptions.ProductException;
+import com.hulkstoreapi.models.ProductModel;
 
 /*** @author Andres Gonzalez ***/
 
