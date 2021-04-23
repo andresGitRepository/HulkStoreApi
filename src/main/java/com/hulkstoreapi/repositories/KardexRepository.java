@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 
 import com.hulkstoreapi.entities.Kardex;
 
+/*** @author Andres Gonzalez ***/
+
 @Repository
 public interface KardexRepository extends CrudRepository<Kardex, Integer> {
 	Optional<Kardex> findById(Integer id);

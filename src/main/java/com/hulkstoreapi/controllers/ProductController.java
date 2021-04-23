@@ -7,7 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hulkstoreapi.entities.Kardex;
 import com.hulkstoreapi.entities.Product;
+import com.hulkstoreapi.services.KardexServiceImpl;
 import com.hulkstoreapi.services.ProductServiceImpl;
 
 import lombok.RequiredArgsConstructor;
@@ -19,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ProductController {
 	private final ProductServiceImpl productServiceImple;
+	private final KardexServiceImpl kardexServiceImple;
 	
 	@GetMapping("/products")
 	public List<Product> getProducts() {
@@ -37,8 +40,9 @@ public class ProductController {
 	}
 	
 	@GetMapping("/products-kardex")
-	public String getKardex() {
-		return "pages/home";
+	public List<Kardex> getKardex() {
+		return kardexServiceImple.listKardexs();
+//		return "pages/home";
 	}
 	
 
