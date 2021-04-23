@@ -14,7 +14,7 @@ import org.mockito.MockitoAnnotations;
 
 import ar.com.todo1.entities.Kardex;
 import ar.com.todo1.entities.Product;
-import ar.com.todo1.exceptions.ProductException;
+import ar.com.todo1.exceptions.StoreException;
 import ar.com.todo1.models.ProductModel;
 import ar.com.todo1.repositories.KardexRepository;
 import ar.com.todo1.repositories.ProductRepository;
@@ -71,7 +71,7 @@ public class ProductTest {
 		try {
 			Product response = productService.newProduct(product);
 			assertEquals(expected, response.getDescription());
-		} catch (ProductException e) {
+		} catch (StoreException e) {
 			assert (Boolean.FALSE);
 		}
 	}
@@ -81,12 +81,10 @@ public class ProductTest {
 		try {
 			String expected = "Tasa Capitan America";
 			productModel.setIdProduct(4001);
-			productModel.setDate(new Date());
-			productModel.setReason("VENTA EN LOCAL");
 			productModel.setCount(new BigInteger("5"));
 			Product response = productService.saleProduct(productModel);
 			assertEquals(expected, response.getDescription());
-		} catch (ProductException e) {
+		} catch (StoreException e) {
 			assert (Boolean.FALSE);
 		}
 	}
@@ -96,12 +94,10 @@ public class ProductTest {
 		try {
 			String expected = "Tasa Capitan America";
 			productModel.setIdProduct(4001);
-			productModel.setDate(new Date());
-			productModel.setReason("COMPRA A PROVEEDOR");
 			productModel.setCount(new BigInteger("20"));
 			Product response = productService.buyProduct(productModel);
 			assertEquals(expected, response.getDescription());
-		} catch (ProductException e) {
+		} catch (StoreException e) {
 			assert (Boolean.FALSE);
 		}
 	}

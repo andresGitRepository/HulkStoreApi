@@ -1,5 +1,4 @@
 # Proyect HulkStoreApi
-Repositorio GitHub https://github.com/andresGitRepository/repoHulkStoreApi
 Sistema kardex para control de productos Marven y DC Comics.
 
 ## Installation
