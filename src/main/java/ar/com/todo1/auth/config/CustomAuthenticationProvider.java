@@ -37,7 +37,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		if (BCrypt.checkpw(password, user.getPassword())) {
 			Set<GrantedAuthority> grantedAuthorities = user.getAuthorities().stream()
 					.map(p -> new SimpleGrantedAuthority(p.getAuthority())).collect(Collectors.toSet());
-			return new CustomUser(user.getEmail(), user.getPassword(), user.getAge(), grantedAuthorities);
+			return new CustomUser(user.getEmail(), user.getPassword(), user.getAge(),user.getId(), grantedAuthorities);
 		} else {
 			throw new BadCredentialsException("Contrasena es incorrecta");
 		}

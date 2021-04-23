@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import ar.com.todo1.auth.entities.CustomUser;
 import ar.com.todo1.auth.interfaces.IUserService;
 import ar.com.todo1.entities.Product;
 import ar.com.todo1.exceptions.StoreException;
@@ -45,7 +46,8 @@ public class ProductController {
 		}
 
 		try {
-			IProductService.newProduct(product);
+			CustomUser user=(CustomUser) authentication;
+			IProductService.newProduct(product,user);
 		} catch (StoreException exception) {
 			model.addAttribute("exception", exception);
 		}
@@ -66,7 +68,8 @@ public class ProductController {
 		}
 
 		try {
-			IProductService.buyProduct(productModel);
+			CustomUser user=(CustomUser) authentication;
+			IProductService.buyProduct(productModel,user);
 		} catch (StoreException exception) {
 			model.addAttribute("exception", exception);
 		}
@@ -84,9 +87,10 @@ public class ProductController {
 			model.addAttribute("dangers", dangers);
 			return "pages/home";
 		}
-
+			
 		try {
-			IProductService.saleProduct(productModel);
+			CustomUser user=(CustomUser) authentication;
+			IProductService.saleProduct(productModel,user);
 		} catch (StoreException exception) {
 			model.addAttribute("exception", exception);
 		}

@@ -20,9 +20,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Wither;
 
 /*** @author Andres Gonzalez ***/
 
+@SuppressWarnings("deprecation")
 @Data
 @Builder
 @NoArgsConstructor
@@ -44,21 +46,27 @@ public class Product {
 	@Column(name = "product_price")
 	private BigInteger price;
 	@NotNull
+	@Wither
 	@Column(name = "product_user_registry")
 	private Integer userRegistry;
 	@NotNull
+	@Wither
 	@Column(name = "product_date_registry")
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date dateRegistry;
+	@Wither
 	@Column(name = "product_user_modify")
 	private Integer userModify;
+	@Wither
 	@Column(name = "product_date_modify")
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date dateModify;
+	@Wither
 	@Column(name = "product_user_unregistry")
 	private Integer userUnregistry;
+	@Wither
 	@Column(name = "product_date_unregistry")
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
