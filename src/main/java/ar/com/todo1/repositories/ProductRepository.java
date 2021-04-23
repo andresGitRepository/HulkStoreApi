@@ -1,11 +1,11 @@
-package com.hulkstoreapi.repositories;
+package ar.com.todo1.repositories;
 
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.hulkstoreapi.entities.Product;
+import ar.com.todo1.entities.Product;
 
 /*** @author Andres Gonzalez ***/
 

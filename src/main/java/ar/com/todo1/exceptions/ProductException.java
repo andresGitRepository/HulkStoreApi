@@ -1,4 +1,4 @@
-package com.hulkstoreapi.exceptions;
+package ar.com.todo1.exceptions;
 
 import lombok.AllArgsConstructor;
 

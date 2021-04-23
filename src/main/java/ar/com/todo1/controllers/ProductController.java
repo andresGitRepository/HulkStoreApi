@@ -1,4 +1,4 @@
-package com.hulkstoreapi.controllers;
+package ar.com.todo1.controllers;
 
 import java.util.List;
 
@@ -7,11 +7,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hulkstoreapi.entities.Kardex;
-import com.hulkstoreapi.entities.Product;
-import com.hulkstoreapi.services.KardexServiceImpl;
-import com.hulkstoreapi.services.ProductServiceImpl;
-
+import ar.com.todo1.entities.Kardex;
+import ar.com.todo1.entities.Product;
+import ar.com.todo1.services.KardexServiceImpl;
+import ar.com.todo1.services.ProductServiceImpl;
 import lombok.RequiredArgsConstructor;
 
 /*** @author Andres Gonzalez ***/

@@ -1,4 +1,4 @@
-package com.hulkstoreapi.repositories;
+package ar.com.todo1.repositories;
 
 import java.util.List;
 import java.util.Optional;
@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import com.hulkstoreapi.entities.Kardex;
+import ar.com.todo1.entities.Kardex;
 
 /*** @author Andres Gonzalez ***/
 

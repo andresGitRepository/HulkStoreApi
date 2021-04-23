@@ -1,9 +1,9 @@
-package com.hulkstoreapi.auth.repositories;
+package ar.com.todo1.auth.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.hulkstoreapi.auth.entities.Authority;
+import ar.com.todo1.auth.entities.Authority;
 
 /*** @author Andres Gonzalez ***/
 

@@ -1,8 +1,8 @@
-package com.hulkstoreapi.auth.interfaces;
+package ar.com.todo1.auth.interfaces;
 
 import java.util.Optional;
 
-import com.hulkstoreapi.auth.entities.User;
+import ar.com.todo1.auth.entities.User;
 
 /*** @author Andres Gonzalez ***/
 

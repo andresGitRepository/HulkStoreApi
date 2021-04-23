@@ -1,4 +1,4 @@
-package com.hulkstoreapi.auth.entities;
+package ar.com.todo1.auth.entities;
 
 import java.util.List;
 

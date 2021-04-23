@@ -1,9 +1,9 @@
-package com.hulkstoreapi.interfaces;
+package ar.com.todo1.interfaces;
 
 import java.util.List;
 
-import com.hulkstoreapi.entities.Kardex;
-import com.hulkstoreapi.exceptions.ProductException;
+import ar.com.todo1.entities.Kardex;
+import ar.com.todo1.exceptions.ProductException;
 
 /*** @author Andres Gonzalez ***/
 

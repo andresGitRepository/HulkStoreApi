@@ -1,4 +1,4 @@
-package com.hulkstoreapi.entities;
+package ar.com.todo1.entities;
 
 import java.math.BigInteger;
 import java.util.Date;

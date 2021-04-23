@@ -1,4 +1,4 @@
-package com.hulkstoreapi.auth.config;
+package ar.com.todo1.auth.config;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -14,9 +14,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Component;
 
-import com.hulkstoreapi.auth.entities.CustomUser;
-import com.hulkstoreapi.auth.entities.User;
-import com.hulkstoreapi.auth.interfaces.IUserService;
+import ar.com.todo1.auth.entities.CustomUser;
+import ar.com.todo1.auth.entities.User;
+import ar.com.todo1.auth.interfaces.IUserService;
 
 /*** @author Andres Gonzalez ***/
 

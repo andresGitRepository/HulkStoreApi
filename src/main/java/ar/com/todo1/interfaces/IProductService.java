@@ -1,11 +1,11 @@
-package com.hulkstoreapi.interfaces;
+package ar.com.todo1.interfaces;
 
 import java.util.List;
 import java.util.Optional;
 
-import com.hulkstoreapi.entities.Product;
-import com.hulkstoreapi.exceptions.ProductException;
-import com.hulkstoreapi.models.ProductModel;
+import ar.com.todo1.entities.Product;
+import ar.com.todo1.exceptions.ProductException;
+import ar.com.todo1.models.ProductModel;
 
 /*** @author Andres Gonzalez ***/
 

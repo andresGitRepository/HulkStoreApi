@@ -1,4 +1,4 @@
-package com.hulkstoreapi.services;
+package ar.com.todo1.services;
 
 import java.math.BigInteger;
 import java.util.Date;
@@ -8,13 +8,12 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.hulkstoreapi.entities.Kardex;
-import com.hulkstoreapi.entities.Product;
-import com.hulkstoreapi.exceptions.ProductException;
-import com.hulkstoreapi.interfaces.IProductService;
-import com.hulkstoreapi.models.ProductModel;
-import com.hulkstoreapi.repositories.ProductRepository;
-
+import ar.com.todo1.entities.Kardex;
+import ar.com.todo1.entities.Product;
+import ar.com.todo1.exceptions.ProductException;
+import ar.com.todo1.interfaces.IProductService;
+import ar.com.todo1.models.ProductModel;
+import ar.com.todo1.repositories.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 

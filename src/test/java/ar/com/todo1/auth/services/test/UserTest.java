@@ -1,4 +1,4 @@
-package com.hulkstoreapi.auth.services.test;
+package ar.com.todo1.auth.services.test;
 
 import static org.junit.Assert.assertEquals;
 
@@ -10,10 +10,10 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import com.hulkstoreapi.auth.entities.User;
-import com.hulkstoreapi.auth.repositories.AuthorityRepository;
-import com.hulkstoreapi.auth.repositories.UserRepository;
-import com.hulkstoreapi.auth.servicies.UserServiceImpl;
+import ar.com.todo1.auth.entities.User;
+import ar.com.todo1.auth.repositories.AuthorityRepository;
+import ar.com.todo1.auth.repositories.UserRepository;
+import ar.com.todo1.auth.servicies.UserServiceImpl;
 
 public class UserTest {
 

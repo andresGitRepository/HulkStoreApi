@@ -1,4 +1,4 @@
-package com.hulkstoreapi.auth.servicies;
+package ar.com.todo1.auth.servicies;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -9,12 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.hulkstoreapi.auth.entities.Authority;
-import com.hulkstoreapi.auth.entities.User;
-import com.hulkstoreapi.auth.interfaces.IUserService;
-import com.hulkstoreapi.auth.repositories.AuthorityRepository;
-import com.hulkstoreapi.auth.repositories.UserRepository;
-
+import ar.com.todo1.auth.entities.Authority;
+import ar.com.todo1.auth.entities.User;
+import ar.com.todo1.auth.interfaces.IUserService;
+import ar.com.todo1.auth.repositories.AuthorityRepository;
+import ar.com.todo1.auth.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 
 /*** @author Andres Gonzalez ***/

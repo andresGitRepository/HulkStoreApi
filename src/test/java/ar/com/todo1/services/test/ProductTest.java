@@ -1,4 +1,4 @@
-package com.hulkstoreapi.services.test;
+package ar.com.todo1.services.test;
 
 import static org.junit.Assert.assertEquals;
 import java.math.BigInteger;
@@ -12,14 +12,14 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import com.hulkstoreapi.entities.Kardex;
-import com.hulkstoreapi.entities.Product;
-import com.hulkstoreapi.exceptions.ProductException;
-import com.hulkstoreapi.models.ProductModel;
-import com.hulkstoreapi.repositories.KardexRepository;
-import com.hulkstoreapi.repositories.ProductRepository;
-import com.hulkstoreapi.services.KardexServiceImpl;
-import com.hulkstoreapi.services.ProductServiceImpl;
+import ar.com.todo1.entities.Kardex;
+import ar.com.todo1.entities.Product;
+import ar.com.todo1.exceptions.ProductException;
+import ar.com.todo1.models.ProductModel;
+import ar.com.todo1.repositories.KardexRepository;
+import ar.com.todo1.repositories.ProductRepository;
+import ar.com.todo1.services.KardexServiceImpl;
+import ar.com.todo1.services.ProductServiceImpl;
 
 public class ProductTest {
 
