@@ -25,4 +25,9 @@ public class ProductServiceImpl implements IProductService {
 	public Optional<Product> findById(Integer id) {
 		return iProductRepository.findById(id);
 	}
+
+	@Override
+	public Product saveProduct(Product product) {
+		return iProductRepository.save(product);
+	}
 }

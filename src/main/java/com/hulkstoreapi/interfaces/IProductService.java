@@ -9,5 +9,8 @@ import com.hulkstoreapi.entities.Product;
 
 public interface IProductService {
 	public Optional<Product> findById(Integer id);
+
 	public List<Product> listProduct();
+
+	public Product saveProduct(Product product);
 }

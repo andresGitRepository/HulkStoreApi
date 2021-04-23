@@ -22,7 +22,6 @@ INSERT INTO Product (product_id,product_description,product_stock,product_price)
 INSERT INTO Product (product_id,product_description,product_stock,product_price) VALUES(1011,'Brazo Winter Soldier',10,1750);
 INSERT INTO Product (product_id,product_description,product_stock,product_price) VALUES(1012,'Rompe Tormeta Thor',10,2990);
 INSERT INTO Product (product_id,product_description,product_stock,product_price) VALUES(1013,'Anillos del Mandarin',10,1540);
-
 INSERT INTO Product (product_id,product_description,product_stock,product_price) VALUES(2001,'Capa Superman',10,1650);
 INSERT INTO Product (product_id,product_description,product_stock,product_price) VALUES(2002,'Escudo Wonder Woman',10,1550);
 INSERT INTO Product (product_id,product_description,product_stock,product_price) VALUES(2003,'Lazo de Hestia Wonder Woman',10,1050);
@@ -36,7 +35,6 @@ INSERT INTO Product (product_id,product_description,product_stock,product_price)
 INSERT INTO Product (product_id,product_description,product_stock,product_price) VALUES(2011,'Batarang Batman',10,1740);
 INSERT INTO Product (product_id,product_description,product_stock,product_price) VALUES(2012,'Mata Dioses Wonder Woman',10,1800);
 INSERT INTO Product (product_id,product_description,product_stock,product_price) VALUES(2013,'Anillo Linterna Verde',10,1490);
-
 INSERT INTO Product (product_id,product_description,product_stock,product_price) VALUES(3001,'Remera Superman',10,59);
 INSERT INTO Product (product_id,product_description,product_stock,product_price) VALUES(3002,'Remera Wonder Woman',10,58);
 INSERT INTO Product (product_id,product_description,product_stock,product_price) VALUES(3003,'Remera Capitan America',10,59);
@@ -50,3 +48,43 @@ INSERT INTO Product (product_id,product_description,product_stock,product_price)
 INSERT INTO Product (product_id,product_description,product_stock,product_price) VALUES(3011,'Remera Black Panter',10,58);
 INSERT INTO Product (product_id,product_description,product_stock,product_price) VALUES(3012,'Remera Hulk',10,58);
 INSERT INTO Product (product_id,product_description,product_stock,product_price) VALUES(3013,'Remera Wolverine',10,58);
+
+INSERT INTO Kardex (kardex_id,product_id,kardex_date,kardex_description,kardex_count) VALUES (1,1001,'20210101','STOCK INICIAL',10)
+INSERT INTO Kardex (kardex_id,product_id,kardex_date,kardex_description,kardex_count) VALUES (2,1002,'20210101','STOCK INICIAL',10)
+INSERT INTO Kardex (kardex_id,product_id,kardex_date,kardex_description,kardex_count) VALUES (3,1003,'20210101','STOCK INICIAL',10)
+INSERT INTO Kardex (kardex_id,product_id,kardex_date,kardex_description,kardex_count) VALUES (4,1004,'20210101','STOCK INICIAL',10)
+INSERT INTO Kardex (kardex_id,product_id,kardex_date,kardex_description,kardex_count) VALUES (5,1005,'20210101','STOCK INICIAL',10)
+INSERT INTO Kardex (kardex_id,product_id,kardex_date,kardex_description,kardex_count) VALUES (6,1006,'20210101','STOCK INICIAL',10)
+INSERT INTO Kardex (kardex_id,product_id,kardex_date,kardex_description,kardex_count) VALUES (7,1007,'20210101','STOCK INICIAL',10)
+INSERT INTO Kardex (kardex_id,product_id,kardex_date,kardex_description,kardex_count) VALUES (8,1008,'20210101','STOCK INICIAL',10)
+INSERT INTO Kardex (kardex_id,product_id,kardex_date,kardex_description,kardex_count) VALUES (9,1009,'20210101','STOCK INICIAL',10)
+INSERT INTO Kardex (kardex_id,product_id,kardex_date,kardex_description,kardex_count) VALUES (10,1010,'20210101','STOCK INICIAL',10)
+INSERT INTO Kardex (kardex_id,product_id,kardex_date,kardex_description,kardex_count) VALUES (11,1011,'20210101','STOCK INICIAL',10)
+INSERT INTO Kardex (kardex_id,product_id,kardex_date,kardex_description,kardex_count) VALUES (12,1012,'20210101','STOCK INICIAL',10)
+INSERT INTO Kardex (kardex_id,product_id,kardex_date,kardex_description,kardex_count) VALUES (13,1013,'20210101','STOCK INICIAL',10)
+INSERT INTO Kardex (kardex_id,product_id,kardex_date,kardex_description,kardex_count) VALUES (14,2001,'20210101','STOCK INICIAL',10)
+INSERT INTO Kardex (kardex_id,product_id,kardex_date,kardex_description,kardex_count) VALUES (15,2002,'20210101','STOCK INICIAL',10)
+INSERT INTO Kardex (kardex_id,product_id,kardex_date,kardex_description,kardex_count) VALUES (16,2003,'20210101','STOCK INICIAL',10)
+INSERT INTO Kardex (kardex_id,product_id,kardex_date,kardex_description,kardex_count) VALUES (17,2004,'20210101','STOCK INICIAL',10)
+INSERT INTO Kardex (kardex_id,product_id,kardex_date,kardex_description,kardex_count) VALUES (18,2005,'20210101','STOCK INICIAL',10)
+INSERT INTO Kardex (kardex_id,product_id,kardex_date,kardex_description,kardex_count) VALUES (19,2006,'20210101','STOCK INICIAL',10)
+INSERT INTO Kardex (kardex_id,product_id,kardex_date,kardex_description,kardex_count) VALUES (20,2007,'20210101','STOCK INICIAL',10)
+INSERT INTO Kardex (kardex_id,product_id,kardex_date,kardex_description,kardex_count) VALUES (21,2008,'20210101','STOCK INICIAL',10)
+INSERT INTO Kardex (kardex_id,product_id,kardex_date,kardex_description,kardex_count) VALUES (22,2009,'20210101','STOCK INICIAL',10)
+INSERT INTO Kardex (kardex_id,product_id,kardex_date,kardex_description,kardex_count) VALUES (23,2010,'20210101','STOCK INICIAL',10)
+INSERT INTO Kardex (kardex_id,product_id,kardex_date,kardex_description,kardex_count) VALUES (24,2011,'20210101','STOCK INICIAL',10)
+INSERT INTO Kardex (kardex_id,product_id,kardex_date,kardex_description,kardex_count) VALUES (25,2012,'20210101','STOCK INICIAL',10)
+INSERT INTO Kardex (kardex_id,product_id,kardex_date,kardex_description,kardex_count) VALUES (26,2013,'20210101','STOCK INICIAL',10)
+INSERT INTO Kardex (kardex_id,product_id,kardex_date,kardex_description,kardex_count) VALUES (27,3001,'20210101','STOCK INICIAL',10)
+INSERT INTO Kardex (kardex_id,product_id,kardex_date,kardex_description,kardex_count) VALUES (28,3002,'20210101','STOCK INICIAL',10)
+INSERT INTO Kardex (kardex_id,product_id,kardex_date,kardex_description,kardex_count) VALUES (29,3003,'20210101','STOCK INICIAL',10)
+INSERT INTO Kardex (kardex_id,product_id,kardex_date,kardex_description,kardex_count) VALUES (30,3004,'20210101','STOCK INICIAL',10)
+INSERT INTO Kardex (kardex_id,product_id,kardex_date,kardex_description,kardex_count) VALUES (31,3005,'20210101','STOCK INICIAL',10)
+INSERT INTO Kardex (kardex_id,product_id,kardex_date,kardex_description,kardex_count) VALUES (32,3006,'20210101','STOCK INICIAL',10)
+INSERT INTO Kardex (kardex_id,product_id,kardex_date,kardex_description,kardex_count) VALUES (33,3007,'20210101','STOCK INICIAL',10)
+INSERT INTO Kardex (kardex_id,product_id,kardex_date,kardex_description,kardex_count) VALUES (34,3008,'20210101','STOCK INICIAL',10)
+INSERT INTO Kardex (kardex_id,product_id,kardex_date,kardex_description,kardex_count) VALUES (35,3009,'20210101','STOCK INICIAL',10)
+INSERT INTO Kardex (kardex_id,product_id,kardex_date,kardex_description,kardex_count) VALUES (36,3010,'20210101','STOCK INICIAL',10)
+INSERT INTO Kardex (kardex_id,product_id,kardex_date,kardex_description,kardex_count) VALUES (37,3011,'20210101','STOCK INICIAL',10)
+INSERT INTO Kardex (kardex_id,product_id,kardex_date,kardex_description,kardex_count) VALUES (38,3012,'20210101','STOCK INICIAL',10)
+INSERT INTO Kardex (kardex_id,product_id,kardex_date,kardex_description,kardex_count) VALUES (39,3013,'20210101','STOCK INICIAL',10)
