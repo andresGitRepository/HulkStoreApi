@@ -15,6 +15,8 @@ public interface IProductService {
 	public List<Product> listProduct();
 
 	public Product newProduct(Product product) throws StoreException;
+	
+	public Product saveProduct(Product product) throws StoreException;
 
 	public Product buyProduct(ProductModel productModel) throws StoreException;
 

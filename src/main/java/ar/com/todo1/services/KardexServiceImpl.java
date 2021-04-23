@@ -52,7 +52,7 @@ public class KardexServiceImpl implements IKardexService {
 			return kardexRepository.save(kardex);
 		} catch (Exception exception) {
 			log.severe(exception.getLocalizedMessage());
-			throw new StoreException(exception,Errors.KARDEX_SAVE.getCode(),Errors.KARDEX_SAVE.getDescription());
+			throw new StoreException(exception, Errors.KARDEX_SAVE.getCode(), Errors.KARDEX_SAVE.getDescription());
 		}
 	}
 

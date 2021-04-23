@@ -11,6 +11,7 @@ import ar.com.todo1.entities.Product;
 import ar.com.todo1.enums.Errors;
 import ar.com.todo1.enums.KardexType;
 import ar.com.todo1.exceptions.StoreException;
+import ar.com.todo1.interfaces.IKardexService;
 import ar.com.todo1.interfaces.IProductService;
 import ar.com.todo1.models.ProductModel;
 import ar.com.todo1.repositories.ProductRepository;
@@ -22,7 +23,7 @@ import lombok.extern.java.Log;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ProductServiceImpl implements IProductService {
 	private final ProductRepository iProductRepository;
-	private final KardexServiceImpl kardexServiceImpl;
+	private final IKardexService iKardexService;
 
 	public List<Product> listProduct() {
 		return iProductRepository.findAll();
@@ -36,13 +37,15 @@ public class ProductServiceImpl implements IProductService {
 	@Override
 	public Product newProduct(Product product) throws StoreException {
 		try {
-			product = iProductRepository.save(product);
+			product = saveProduct(product);
 			ProductModel newProduct = ProductModel.builder().idProduct(product.getId()).count(product.getStock())
 					.build();
-			kardexServiceImpl.insertKardex(newProduct, KardexType.INICIAL);
+			iKardexService.insertKardex(newProduct, KardexType.INICIAL);
 		} catch (StoreException exception) {
-			StoreException storeException= new StoreException(exception,Errors.PRODUCT_SAVE.getCode(),Errors.PRODUCT_SAVE.getDescription());
-			log.severe(String.join(" ", storeException.getCode(),storeException.getDescription(),storeException.getLocalizedMessage()));
+			StoreException storeException = new StoreException(exception, Errors.PRODUCT_SAVE.getCode(),
+					Errors.PRODUCT_SAVE.getDescription());
+			log.severe(String.join(" ", storeException.getCode(), storeException.getDescription(),
+					storeException.getLocalizedMessage()));
 			throw storeException;
 
 		}
@@ -54,11 +57,13 @@ public class ProductServiceImpl implements IProductService {
 		try {
 			Product product = iProductRepository.findById(productModel.getIdProduct()).get();
 			product.setStock(product.getStock().add(productModel.getCount()));
-			kardexServiceImpl.insertKardex(productModel, KardexType.COMPRA);
+			iKardexService.insertKardex(productModel, KardexType.COMPRA);
 			return iProductRepository.save(product);
 		} catch (Exception exception) {
-			StoreException storeException= new StoreException(exception,Errors.PRODUCT_BUY.getCode(),Errors.PRODUCT_BUY.getDescription());
-			log.severe(String.join(" ", storeException.getCode(),storeException.getDescription(),storeException.getLocalizedMessage()));
+			StoreException storeException = new StoreException(exception, Errors.PRODUCT_BUY.getCode(),
+					Errors.PRODUCT_BUY.getDescription());
+			log.severe(String.join(" ", storeException.getCode(), storeException.getDescription(),
+					storeException.getLocalizedMessage()));
 			throw storeException;
 		}
 	}
@@ -69,14 +74,16 @@ public class ProductServiceImpl implements IProductService {
 			if (hasStock(productModel) && hasAvaibleStock(productModel)) {
 				Product product = iProductRepository.findById(productModel.getIdProduct()).get();
 				product.setStock(product.getStock().subtract(productModel.getCount()));
-				kardexServiceImpl.insertKardex(productModel, KardexType.VENTA);
+				iKardexService.insertKardex(productModel, KardexType.VENTA);
 				return iProductRepository.save(product);
 			} else {
 				return null;
 			}
 		} catch (Exception exception) {
-			StoreException storeException= new StoreException(exception,Errors.PRODUCT_SALE.getCode(),Errors.PRODUCT_SALE.getDescription());
-			log.severe(String.join(" ", storeException.getCode(),storeException.getDescription(),storeException.getLocalizedMessage()));
+			StoreException storeException = new StoreException(exception, Errors.PRODUCT_SALE.getCode(),
+					Errors.PRODUCT_SALE.getDescription());
+			log.severe(String.join(" ", storeException.getCode(), storeException.getDescription(),
+					storeException.getLocalizedMessage()));
 			throw storeException;
 		}
 	}
@@ -87,8 +94,9 @@ public class ProductServiceImpl implements IProductService {
 		Product product = iProductRepository.findById(productModel.getIdProduct()).get();
 		if (product.getStock().compareTo(BigInteger.ZERO) <= 0) {
 			response = false;
-			StoreException storeException= new StoreException(Errors.PRODUCT_OUT_OF_STOCK.getCode(),Errors.PRODUCT_OUT_OF_STOCK.getDescription());
-			log.severe(String.join(" ", storeException.getCode(),storeException.getDescription()));
+			StoreException storeException = new StoreException(Errors.PRODUCT_OUT_OF_STOCK.getCode(),
+					Errors.PRODUCT_OUT_OF_STOCK.getDescription());
+			log.severe(String.join(" ", storeException.getCode(), storeException.getDescription()));
 			throw storeException;
 		}
 		return response;
@@ -100,11 +108,18 @@ public class ProductServiceImpl implements IProductService {
 		Product product = iProductRepository.findById(productModel.getIdProduct()).get();
 		if (product.getStock().compareTo(productModel.getCount()) < 0) {
 			response = false;
-			StoreException storeException= new StoreException(Errors.PRODUCT_NO_STOCK_AVAILABLE.getCode(),Errors.PRODUCT_NO_STOCK_AVAILABLE.getDescription());
-			log.severe(String.join(" ", storeException.getCode(),storeException.getDescription()));
+			StoreException storeException = new StoreException(Errors.PRODUCT_NO_STOCK_AVAILABLE.getCode(),
+					Errors.PRODUCT_NO_STOCK_AVAILABLE.getDescription());
+			log.severe(String.join(" ", storeException.getCode(), storeException.getDescription()));
 			throw storeException;
 		}
 		return response;
+	}
+
+	@Override
+	public Product saveProduct(Product product) throws StoreException {
+		
+		return iProductRepository.save(product);
 	}
 
 }

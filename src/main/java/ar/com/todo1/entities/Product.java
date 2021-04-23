@@ -1,6 +1,7 @@
 package ar.com.todo1.entities;
 
 import java.math.BigInteger;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +9,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.sun.istack.NotNull;
 
@@ -38,5 +43,24 @@ public class Product {
 	@NotNull
 	@Column(name = "product_price")
 	private BigInteger price;
-
+	@NotNull
+	@Column(name = "product_user_registry")
+	private Integer userRegistry;
+	@NotNull
+	@Column(name = "product_date_registry")
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	private Date dateRegistry;
+	@Column(name = "product_user_modify")
+	private Integer userModify;
+	@Column(name = "product_date_modify")
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	private Date dateModify;
+	@Column(name = "product_user_unregistry")
+	private Integer userUnregistry;
+	@Column(name = "product_date_unregistry")
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	private Date dateUnregistry;
 }
