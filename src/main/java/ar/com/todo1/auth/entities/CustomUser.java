@@ -20,6 +20,6 @@ public class CustomUser extends UsernamePasswordAuthenticationToken {
 			Collection<? extends GrantedAuthority> authorities) {
 		super(username, password, authorities);
 		this.age = age;
-		this.id=id;
+		this.id = id;
 	}
 }

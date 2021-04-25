@@ -33,7 +33,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 				.antMatchers("/", "/h2-console", "/login/**", "/logout", "/signup", "/createUser", "/kardex",
-						"/searchKardexs","/pageSearchKardex","/allKardexs", "/products", "/buys", "/saes", "/searchProducts", "/newProducts",
+						"/searchKardexs", "/pageSearchKardex", "/allKardexs", "/products", "/buys", "/saes",
+						"/searchProducts", "/newProducts",
 						"/deleteProducts","/allProducts")
 				.permitAll().antMatchers("/dist/**/**").permitAll().anyRequest().authenticated().and().headers()
 				.frameOptions().disable().and().csrf().disable().formLogin().defaultSuccessUrl("/home", true)

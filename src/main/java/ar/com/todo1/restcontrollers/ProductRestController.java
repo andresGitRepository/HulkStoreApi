@@ -28,13 +28,12 @@ public class ProductRestController {
 
 	@GetMapping("/getproducts")
 	public List<Product> searchProducts(Authentication authentication) throws StoreException {
-		return	iProductService.searchProducts();
-	}
-	
-	@PostMapping("/search")
-	public Optional<Product> searchProduct(@Valid Integer idProduct, Model model) throws StoreException {
-		return	iProductService.searchProduct(idProduct);
+		return iProductService.searchProducts();
 	}
 
-	
+	@PostMapping("/search")
+	public Optional<Product> searchProduct(@Valid Integer idProduct, Model model) throws StoreException {
+		return iProductService.searchProduct(idProduct);
+	}
+
 }

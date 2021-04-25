@@ -13,12 +13,11 @@ public class StoreException extends Exception {
 	private static final long serialVersionUID = 1L;
 	private String code;
 	private String description;
-	
 
-	public StoreException(Exception exception, String code,String message) {
+	public StoreException(Exception exception, String code, String message) {
 		super(exception);
 		this.description = message;
-		this.code=code;
+		this.code = code;
 	}
 
 	@Override

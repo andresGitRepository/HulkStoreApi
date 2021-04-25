@@ -42,15 +42,16 @@ public class ProductServiceImpl implements IProductService {
 			log.severe(String.join(" ", storeException.getCode(), storeException.getDescription(),
 					storeException.getLocalizedMessage()));
 			throw storeException;
-		}		
+		}
 	}
 
 	@Override
 	public Optional<Product> searchProduct(Integer idProduct) throws StoreException {
 		try {
-			Optional <Product> product=iProductRepository.findById(idProduct);
+			Optional<Product> product = iProductRepository.findById(idProduct);
 			if (!product.isPresent())
-				product= Optional.of(Product.builder().id(BigInteger.ZERO.intValue()).description("No existe").build());
+				product = Optional
+						.of(Product.builder().id(BigInteger.ZERO.intValue()).description("No existe").build());
 			return product;
 		} catch (Exception exception) {
 			StoreException storeException = new StoreException(exception, Errors.PRODUCT_SEARCH.getCode(),
@@ -58,7 +59,7 @@ public class ProductServiceImpl implements IProductService {
 			log.severe(String.join(" ", storeException.getCode(), storeException.getDescription(),
 					storeException.getLocalizedMessage()));
 			throw storeException;
-		}		
+		}
 	}
 
 	@Override
@@ -114,13 +115,12 @@ public class ProductServiceImpl implements IProductService {
 		}
 	}
 
-
 	@Override
 	public Product saveProduct(Product product, CustomUser user) throws StoreException {
 		try {
 			IComplementABM complementABM = (object, id) -> {
 				Product productABM = (Product) object;
-				if (productABM.getId()==null ) {
+				if (productABM.getId() == null) {
 					return productABM.withUserRegistry(id).withDateRegistry(Instant.now().toDate());
 				} else {
 					return productABM.withUserModify(id).withDateModify(Instant.now().toDate());
@@ -128,7 +128,7 @@ public class ProductServiceImpl implements IProductService {
 			};
 			product = (Product) complementABM.execute(product, user.getId());
 			return iProductRepository.save(product);
-		}catch (Exception exception) {
+		} catch (Exception exception) {
 			StoreException storeException = new StoreException(exception, Errors.PRODUCT_SAVE.getCode(),
 					Errors.PRODUCT_SAVE.getDescription());
 			log.severe(String.join(" ", storeException.getCode(), storeException.getDescription(),
@@ -140,9 +140,9 @@ public class ProductServiceImpl implements IProductService {
 	@Override
 	public Product deleteProduct(Product product, CustomUser user) throws StoreException {
 		try {
-		product.withUserUnregistry(user.getId()).withDateUnregistry(Instant.now().toDate());
-		return iProductRepository.save(product);
-		}catch (Exception exception) {
+			product.withUserUnregistry(user.getId()).withDateUnregistry(Instant.now().toDate());
+			return iProductRepository.save(product);
+		} catch (Exception exception) {
 			StoreException storeException = new StoreException(exception, Errors.PRODUCT_DELETE.getCode(),
 					Errors.PRODUCT_DELETE.getDescription());
 			log.severe(String.join(" ", storeException.getCode(), storeException.getDescription(),
@@ -151,8 +151,6 @@ public class ProductServiceImpl implements IProductService {
 		}
 	}
 
-
-	
 	@Override
 	public Boolean hasStock(ProductModel productModel) throws StoreException {
 		Boolean response = Boolean.TRUE;
@@ -180,6 +178,5 @@ public class ProductServiceImpl implements IProductService {
 		}
 		return response;
 	}
-
 
 }

@@ -37,7 +37,6 @@ public class KardexController {
 		return "pages/searchKardex";
 	}
 
-
 	@GetMapping("/allKardexs")
 	public String allProducts(Authentication authentication, Model model) {
 		try {
@@ -52,7 +51,6 @@ public class KardexController {
 			return "pages/allKardexs";
 		}
 	}
-	
 
 	@PostMapping("/searchKardexs")
 	public String searchProducts(@Valid ProductModel productModel, Authentication authentication, Model model) {
@@ -67,7 +65,7 @@ public class KardexController {
 					Errors.PRODUCT_SEARCH.getDescription());
 			model.addAttribute("error", storeException.getDescription());
 			return "pages/searchKardex";
-		}		
+		}
 	}
-	
+
 }

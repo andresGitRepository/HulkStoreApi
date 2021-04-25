@@ -32,7 +32,7 @@ public class ProductController {
 	@Autowired
 	private IProductService iProductService;
 	@Autowired
-	private IKardexService iKardexService;	
+	private IKardexService iKardexService;
 	@Autowired
 	private ProductValidator productValidator;
 	@Autowired
@@ -64,9 +64,9 @@ public class ProductController {
 					Errors.PRODUCT_SEARCH.getDescription());
 			model.addAttribute("error", storeException.getDescription());
 			return "pages/searchProduct";
-		}		
+		}
 	}
-	
+
 	@GetMapping("/allProducts")
 	public String allProducts(Authentication authentication, Model model) {
 		try {
@@ -80,7 +80,7 @@ public class ProductController {
 			model.addAttribute("error", storeException.getDescription());
 			return "pages/allProducts";
 		}
-	}	
+	}
 
 	@GetMapping("/newProducts")
 	public String newProducts() {
@@ -91,8 +91,6 @@ public class ProductController {
 	public String deleteProducts() {
 		return "pages/deleteProduct";
 	}
-
-
 
 	@PostMapping("/new")
 	public String newProduct(@Valid Product product, Authentication authentication, Model model,
@@ -155,7 +153,7 @@ public class ProductController {
 			model.addAttribute("exception", exception);
 			return "pages/buyProducts";
 		}
-		
+
 	}
 
 	@PostMapping("/sale")

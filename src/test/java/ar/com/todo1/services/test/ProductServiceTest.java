@@ -3,7 +3,6 @@ package ar.com.todo1.services.test;
 import static org.junit.Assert.assertEquals;
 
 import java.math.BigInteger;
-import java.util.Date;
 import java.util.Optional;
 
 import org.junit.Before;
@@ -14,7 +13,6 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import ar.com.todo1.auth.entities.CustomUser;
-import ar.com.todo1.entities.Kardex;
 import ar.com.todo1.entities.Product;
 import ar.com.todo1.exceptions.StoreException;
 import ar.com.todo1.models.ProductModel;
@@ -33,18 +31,17 @@ public class ProductServiceTest {
 	private ProductServiceImpl productService;
 	@InjectMocks
 	private KardexServiceImpl kardexService;
-	
-	//PRODUCT
+
+	// PRODUCT
 	private Product product = Product.builder().build();
 	private ProductModel productModel;
 	private final Integer ID_PRODUCT = 1001;
 	private final String DESCRIPTIONS = "Puño Hulk";
-	
-	//CUSTOM USER
+	private final BigInteger STOCK = new BigInteger("10");
+	private final BigInteger PRICE = new BigInteger("355");
+
+	// CUSTOM USER
 	private CustomUser user = new CustomUser(null, null, null, 1, null);
-	
-	//KARDEX
-	private Kardex kardex = Kardex.builder().build();
 
 	@SuppressWarnings("deprecation")
 	@Before
@@ -52,19 +49,8 @@ public class ProductServiceTest {
 		MockitoAnnotations.initMocks(this);
 		kardexService = new KardexServiceImpl(kardexRepository);
 		productService = new ProductServiceImpl(productRepository, kardexService);
-		
-		product = Product.builder()
-					.id(ID_PRODUCT)
-					.description(DESCRIPTIONS)
-					.stock(new BigInteger("10"))
-					.price(new BigInteger("355")).build();
 
-		kardex = Kardex.builder()
-				.id(1)
-				.idProduct(ID_PRODUCT)
-				.description("STOCK INICIAL")
-				.date(new Date())
-				.count(new BigInteger("10")).build();
+		product = Product.builder().id(ID_PRODUCT).description(DESCRIPTIONS).stock(STOCK).price(PRICE).build();
 
 		Mockito.when(productRepository.save(product)).thenReturn(product);
 		Mockito.when(productRepository.findById(product.getId())).thenReturn(Optional.of(product));
@@ -81,7 +67,7 @@ public class ProductServiceTest {
 	public void newProducTest() {
 		Integer expected = ID_PRODUCT;
 		try {
-			Product response = productService.newProduct(product,user);
+			Product response = productService.newProduct(product, user);
 			assertEquals(expected, response.getId());
 		} catch (Exception e) {
 			assert (Boolean.FALSE);

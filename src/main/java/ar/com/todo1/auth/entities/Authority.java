@@ -23,19 +23,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "Authority")
-public class Authority  {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "authority_id")
-    private Integer id;
-    @Column(name = "authority")
-    private String authority;
-    @ManyToMany(mappedBy = "authorities")
-    private List<User> user;
+public class Authority {
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "authority_id")
+	private Integer id;
+	@Column(name = "authority")
+	private String authority;
+	@ManyToMany(mappedBy = "authorities")
+	private List<User> user;
 
-    public Authority(Integer id, String authority) {
-        this.id = id;
-        this.authority = authority;
-    }
+	public Authority(Integer id, String authority) {
+		this.id = id;
+		this.authority = authority;
+	}
 
 }
