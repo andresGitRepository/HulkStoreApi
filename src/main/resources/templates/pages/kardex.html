@@ -1,6 +1,6 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title th:inline="text">Hulk Store - Home [[${@environment.getProperty('hulkstoreapi.version')}]]</title>
+	<title th:inline="text">Hulk Store - Kardex [[${@environment.getProperty('hulkstoreapi.version')}]]</title>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<link rel="stylesheet" th:href="@{dist/bootstrap-4.0.0/css/bootstrap.css}">
@@ -31,6 +31,15 @@
 			</form>
         </div>
       </div>
+    </nav>
+    <nav class="navbar navbar-expand-xl navbar-light bg-light rounded" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item"><a class="nav-link active" th:href="@{/home}">Buscar</a></li>
+			</ul>
+        </div>
+      </div>      
     </nav>
 </body>
 </html>

@@ -10,6 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -27,75 +28,108 @@ import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-@RequestMapping(value = "/Products")
+//@RequestMapping(value = "/products")
 public class ProductController {
 	private final IProductService IProductService;
 	private final ProductValidator productValidator;
 	private final ProductModelValidator productModelValidator;
 	private final IUserService IUserService;
 
+	@GetMapping("/products")
+	public String initialProducts() {
+		return "pages/products";
+	}
+	
+	@GetMapping("/buys")
+	public String buyProducts() {
+		return "pages/buyProducts";
+	}
+	
+	@GetMapping("/sales")
+	public String saleProducts() {
+		return "pages/saleProducts";
+	}	
+
 	@PostMapping("/new")
-	public String newProduct(@Valid Product product, Authentication authentication, Model model,
+	public Product newProduct(@Valid Product product, Authentication authentication, Model model,
 			BindingResult bindingResult) {
 		productValidator.validate(product, bindingResult);
 		if (bindingResult.hasErrors()) {
 			List<String> dangers = bindingResult.getAllErrors().stream().map(erro -> erro.getCode())
 					.collect(Collectors.toList());
 			model.addAttribute("dangers", dangers);
-			return "pages/home";
 		}
 
 		try {
-			CustomUser user=(CustomUser) authentication;
-			IProductService.newProduct(product,user);
+			CustomUser user = (CustomUser) authentication;
+			product = IProductService.newProduct(product, user);
 		} catch (StoreException exception) {
 			model.addAttribute("exception", exception);
 		}
 		model.addAttribute("user", IUserService.findByEmail(authentication.getName()).get());
-
-		return "pages/home";
+		return product;
 	}
+	
+	@PostMapping("/delete")
+	public Product deleteProduct(@Valid Product product, Authentication authentication, Model model,
+			BindingResult bindingResult) {
+		productValidator.validate(product, bindingResult);
+		if (bindingResult.hasErrors()) {
+			List<String> dangers = bindingResult.getAllErrors().stream().map(erro -> erro.getCode())
+					.collect(Collectors.toList());
+			model.addAttribute("dangers", dangers);
+		}
+
+		try {
+			CustomUser user = (CustomUser) authentication;
+			product = IProductService.deleteProduct(product, user);
+		} catch (StoreException exception) {
+			model.addAttribute("exception", exception);
+		}
+		model.addAttribute("user", IUserService.findByEmail(authentication.getName()).get());
+		return product;
+	}	
 
 	@PostMapping("/buy")
-	public String buyProducts(@Valid ProductModel productModel, Authentication authentication, Model model,
+	public Product buyProducts(@Valid ProductModel productModel, Authentication authentication, Model model,
 			BindingResult bindingResult) {
+		Product product=new Product();
 		productModelValidator.validate(productModel, bindingResult);
 		if (bindingResult.hasErrors()) {
 			List<String> dangers = bindingResult.getAllErrors().stream().map(erro -> erro.getCode())
 					.collect(Collectors.toList());
 			model.addAttribute("dangers", dangers);
-			return "pages/home";
 		}
 
 		try {
-			CustomUser user=(CustomUser) authentication;
-			IProductService.buyProduct(productModel,user);
+			CustomUser user = (CustomUser) authentication;
+			product=IProductService.buyProduct(productModel, user);
 		} catch (StoreException exception) {
 			model.addAttribute("exception", exception);
 		}
 		model.addAttribute("user", IUserService.findByEmail(authentication.getName()).get());
-		return "pages/home";
+		return product;
 	}
 
 	@PostMapping("/sale")
-	public String saleProdcuts(@Valid ProductModel productModel, Authentication authentication, Model model,
+	public Product saleProdcuts(@Valid ProductModel productModel, Authentication authentication, Model model,
 			BindingResult bindingResult) {
+		Product product=new Product();
 		productModelValidator.validate(productModel, bindingResult);
 		if (bindingResult.hasErrors()) {
 			List<String> dangers = bindingResult.getAllErrors().stream().map(erro -> erro.getCode())
 					.collect(Collectors.toList());
 			model.addAttribute("dangers", dangers);
-			return "pages/home";
 		}
-			
+
 		try {
-			CustomUser user=(CustomUser) authentication;
-			IProductService.saleProduct(productModel,user);
+			CustomUser user = (CustomUser) authentication;
+			product=IProductService.saleProduct(productModel, user);
 		} catch (StoreException exception) {
 			model.addAttribute("exception", exception);
 		}
 		model.addAttribute("user", IUserService.findByEmail(authentication.getName()).get());
-		return "pages/home";
+		return product;
 	}
 
 }
