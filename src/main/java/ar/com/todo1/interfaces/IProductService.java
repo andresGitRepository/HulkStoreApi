@@ -1,7 +1,6 @@
 package ar.com.todo1.interfaces;
 
 import java.util.List;
-import java.util.Optional;
 
 import ar.com.todo1.auth.entities.CustomUser;
 import ar.com.todo1.entities.Product;
@@ -11,19 +10,19 @@ import ar.com.todo1.models.ProductModel;
 /*** @author Andres Gonzalez ***/
 
 public interface IProductService {
-	public Optional<Product> findById(Integer id);
+	public List<Product> searchProducts() throws StoreException;
 
-	public List<Product> listProduct();
+	public Product searchProduct(Integer idProduct) throws StoreException;
 
-	public Product newProduct(Product product,CustomUser user) throws StoreException;
-	
-	public Product saveProduct(Product product,CustomUser user) throws StoreException;
-	
-	public Product deleteProduct(Product product,CustomUser user) throws StoreException;
+	public Product newProduct(Product product, CustomUser user) throws StoreException;
 
-	public Product buyProduct(ProductModel productModel,CustomUser user) throws StoreException;
+	public Product saveProduct(Product product, CustomUser user) throws StoreException;
 
-	public Product saleProduct(ProductModel productModel,CustomUser user) throws StoreException;
+	public Product deleteProduct(Product product, CustomUser user) throws StoreException;
+
+	public Product buyProduct(ProductModel productModel, CustomUser user) throws StoreException;
+
+	public Product saleProduct(ProductModel productModel, CustomUser user) throws StoreException;
 
 	public Boolean hasStock(ProductModel productModel) throws StoreException;
 

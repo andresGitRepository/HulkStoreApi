@@ -1,6 +1,6 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title th:inline="text">Hulk Store - Vender Producto [[${@environment.getProperty('hulkstoreapi.version')}]]</title>
+	<title th:inline="text">Hulk Store App - Vender Producto [[${@environment.getProperty('hulkstoreapi.version')}]]</title>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<link rel="stylesheet" th:href="@{dist/bootstrap-4.0.0/css/bootstrap.css}">
@@ -32,5 +32,18 @@
         </div>
       </div>
     </nav>
+	<form id="form-sign-up" class="form-signin" th:action="@{/sale}" method="post">
+		<h1 class="h3 mb-3 font-weight-normal">Ingrese Producto!</h1>
+		<label for="inputId" class="sr-only">Id Producto</label>
+		<input type="text" name="idProduct" class="form-control" placeholder="Id Producto">
+		<label for="inputCount" class="sr-only">Cantidad</label>
+		<input type="text" name="count" class="form-control" placeholder="Cantidad">
+		<button class="btn btn-lg btn-primary btn-block" type="submit">Vender</button>
+    </form>
+	<input th:if="${accept} != null" class="invisible" id="accept" th:value="${accept}"/>
+	<input th:each="danger : ${dangers}" class="invisible dangers" th:value="${danger}"/>
+	<input th:if="${success} != null" class="invisible" id="logout" th:value="${success}"/>
+	<input th:if="${error} != null" class="invisible" id="error" th:value="${error}"/>	
+    
 </body>
 </html>

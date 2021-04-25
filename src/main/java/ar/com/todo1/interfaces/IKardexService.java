@@ -12,9 +12,9 @@ import ar.com.todo1.models.ProductModel;
 public interface IKardexService {
 	public Kardex getKardex(Integer id);
 
-	public List<Kardex> listKardexs() throws StoreException;
+	public List<Kardex> searchKardexs() throws StoreException;
 
-	public List<Kardex> listKardexByProduct(Integer idProdcut) throws StoreException;
+	public List<Kardex> searchKardexProduct(Integer idProdcut) throws StoreException;
 
 	public Kardex insertKardex(ProductModel productModel, KardexType type) throws StoreException;
 }

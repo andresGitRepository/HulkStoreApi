@@ -44,5 +44,20 @@
         </div>
       </div>      
     </nav>
+	<form id="form-sign-up" class="form-signin" th:action="@{/new}" method="post">
+		<h1 class="h3 mb-3 font-weight-normal">Ingrese nuevo producto!</h1>
+		<label for="inputDescription" class="sr-only">Descripcion</label>
+		<input type="text" name="description" class="form-control" placeholder="Descripcion">
+		<label for="inputStock" class="sr-only">Stock</label>
+		<input type="text" name="stock" class="form-control" placeholder="Stock">
+		<label for="inputPrice" class="sr-only">Precio</label>
+		<input type="text" name="price" class="form-control" placeholder="Precio">
+		<button class="btn btn-lg btn-primary btn-block" type="submit">Guardar</button>
+    </form>
+	<input th:if="${accept} != null" class="invisible" id="accept" th:value="${accept}"/>
+	<input th:each="danger : ${dangers}" class="invisible dangers" th:value="${danger}"/>
+	<input th:if="${success} != null" class="invisible" id="logout" th:value="${success}"/>
+	<input th:if="${error} != null" class="invisible" id="error" th:value="${error}"/>	
+       
 </body>
 </html>

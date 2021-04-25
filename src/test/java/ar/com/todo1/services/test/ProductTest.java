@@ -15,6 +15,7 @@ import org.mockito.MockitoAnnotations;
 
 import ar.com.todo1.entities.Kardex;
 import ar.com.todo1.entities.Product;
+import ar.com.todo1.exceptions.StoreException;
 import ar.com.todo1.models.ProductModel;
 import ar.com.todo1.repositories.KardexRepository;
 import ar.com.todo1.repositories.ProductRepository;
@@ -31,7 +32,7 @@ public class ProductTest {
 	private ProductServiceImpl productService;
 	@InjectMocks
 	private KardexServiceImpl kardexService;
-	
+
 	private Product product;
 	private ProductModel productModel;
 	private Kardex kardex;
@@ -59,17 +60,17 @@ public class ProductTest {
 	}
 
 	@Test
-	public void findTest() {
+	public void findTest() throws StoreException {
 		String expected = "Tasa Capitan America";
-		Optional<Product> response = productService.findById(4001);
-		assertEquals(expected, response.get().getDescription());
+		Product response = productService.searchProduct(4001);
+		assertEquals(expected, response.getDescription());
 	}
 
 	@Test
 	public void newProducTest() {
 		String expected = "Tasa Capitan America";
 		try {
-			Product response = new Product();//productService.newProduct(product);
+			Product response = new Product();// productService.newProduct(product);
 			assertEquals(expected, response.getDescription());
 		} catch (Exception e) {
 			assert (Boolean.FALSE);
@@ -82,7 +83,7 @@ public class ProductTest {
 			String expected = "Tasa Capitan America";
 			productModel.setIdProduct(4001);
 			productModel.setCount(new BigInteger("5"));
-			Product response = new Product();//productService.saleProduct(productModel);
+			Product response = new Product();// productService.saleProduct(productModel);
 			assertEquals(expected, response.getDescription());
 		} catch (Exception e) {
 			assert (Boolean.FALSE);
@@ -95,7 +96,7 @@ public class ProductTest {
 			String expected = "Tasa Capitan America";
 			productModel.setIdProduct(4001);
 			productModel.setCount(new BigInteger("20"));
-			Product response = new Product();//productService.buyProduct(productModel);
+			Product response = new Product();// productService.buyProduct(productModel);
 			assertEquals(expected, response.getDescription());
 		} catch (Exception e) {
 			assert (Boolean.FALSE);

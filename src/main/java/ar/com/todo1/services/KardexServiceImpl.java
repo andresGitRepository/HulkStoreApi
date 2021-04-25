@@ -31,13 +31,29 @@ public class KardexServiceImpl implements IKardexService {
 	}
 
 	@Override
-	public List<Kardex> listKardexs() {
-		return kardexRepository.findAll();
+	public List<Kardex> searchKardexs() throws StoreException {
+		try {
+			return kardexRepository.findAll();
+		} catch (Exception exception) {
+			StoreException storeException = new StoreException(exception, Errors.KARDEX_SEARCH.getCode(),
+					Errors.KARDEX_SEARCH.getDescription());
+			log.severe(String.join(" ", storeException.getCode(), storeException.getDescription(),
+					storeException.getLocalizedMessage()));
+			throw storeException;
+		}
 	}
 
 	@Override
-	public List<Kardex> listKardexByProduct(Integer idProdcut) {
-		return kardexRepository.findByIdProduct(idProdcut);
+	public List<Kardex> searchKardexProduct(Integer idProduct) throws StoreException {
+		try {
+			return kardexRepository.findByIdProduct(idProduct);
+		} catch (Exception exception) {
+			StoreException storeException = new StoreException(exception, Errors.KARDEX_SEARCH.getCode(),
+					Errors.KARDEX_SEARCH.getDescription());
+			log.severe(String.join(" ", storeException.getCode(), storeException.getDescription(),
+					storeException.getLocalizedMessage()));
+			throw storeException;
+		}
 	}
 
 	@Override

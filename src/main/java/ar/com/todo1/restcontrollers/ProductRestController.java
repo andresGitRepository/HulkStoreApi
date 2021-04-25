@@ -1,5 +1,6 @@
 package ar.com.todo1.restcontrollers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ar.com.todo1.auth.interfaces.IUserService;
 import ar.com.todo1.entities.Product;
+import ar.com.todo1.exceptions.StoreException;
 import ar.com.todo1.interfaces.IProductService;
 import lombok.RequiredArgsConstructor;
 
@@ -23,10 +25,16 @@ public class ProductRestController {
 	private final IProductService iProductService;
 	private final IUserService IUserService;
 
-	@GetMapping("/all-products")
-	public List<Product> getKardex(Authentication authentication, Model model) {
+	@GetMapping("/allproducts")
+	public List<Product> searchProducts(Authentication authentication, Model model) {
+		List<Product> product = new ArrayList<Product>();
+		try {
+			product = iProductService.searchProducts();
+		} catch (StoreException exception) {
+			model.addAttribute("exception", exception);
+		}
 		model.addAttribute("user", IUserService.findByEmail(authentication.getName()).get());
-		return iProductService.listProduct();
+		return product;
 	}
 
 }

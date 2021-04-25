@@ -2,7 +2,6 @@ package ar.com.todo1.services;
 
 import java.math.BigInteger;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.joda.time.Instant;
@@ -22,6 +21,8 @@ import ar.com.todo1.repositories.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 
+/*** @author Andres Gonzalez ***/
+
 @Log
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -29,15 +30,31 @@ public class ProductServiceImpl implements IProductService {
 	private final ProductRepository iProductRepository;
 	private final IKardexService iKardexService;
 
-	public List<Product> listProduct() {
+	public List<Product> searchProducts() throws StoreException {
 		List<Product> listAvailables = iProductRepository.findAll();
-		return listAvailables.stream().filter(product -> product.getUserUnregistry() == null)
-				.collect(Collectors.toList());
+		try {
+			return listAvailables.stream().filter(product -> product.getUserUnregistry() == null)
+					.collect(Collectors.toList());
+		} catch (Exception exception) {
+			StoreException storeException = new StoreException(exception, Errors.PRODUCT_SEARCH.getCode(),
+					Errors.PRODUCT_SEARCH.getDescription());
+			log.severe(String.join(" ", storeException.getCode(), storeException.getDescription(),
+					storeException.getLocalizedMessage()));
+			throw storeException;
+		}		
 	}
 
 	@Override
-	public Optional<Product> findById(Integer id) {
-		return iProductRepository.findById(id);
+	public Product searchProduct(Integer idProduct) throws StoreException {
+		try {
+			return iProductRepository.findById(idProduct).get();
+		} catch (Exception exception) {
+			StoreException storeException = new StoreException(exception, Errors.PRODUCT_SEARCH.getCode(),
+					Errors.PRODUCT_SEARCH.getDescription());
+			log.severe(String.join(" ", storeException.getCode(), storeException.getDescription(),
+					storeException.getLocalizedMessage()));
+			throw storeException;
+		}		
 	}
 
 	@Override
@@ -93,40 +110,13 @@ public class ProductServiceImpl implements IProductService {
 		}
 	}
 
-	@Override
-	public Boolean hasStock(ProductModel productModel) throws StoreException {
-		Boolean response = Boolean.TRUE;
-		Product product = iProductRepository.findById(productModel.getIdProduct()).get();
-		if (product.getStock().compareTo(BigInteger.ZERO) <= 0) {
-			response = false;
-			StoreException storeException = new StoreException(Errors.PRODUCT_OUT_OF_STOCK.getCode(),
-					Errors.PRODUCT_OUT_OF_STOCK.getDescription());
-			log.severe(String.join(" ", storeException.getCode(), storeException.getDescription()));
-			throw storeException;
-		}
-		return response;
-	}
-
-	@Override
-	public Boolean hasAvaibleStock(ProductModel productModel) throws StoreException {
-		Boolean response = Boolean.TRUE;
-		Product product = iProductRepository.findById(productModel.getIdProduct()).get();
-		if (product.getStock().compareTo(productModel.getCount()) < 0) {
-			response = false;
-			StoreException storeException = new StoreException(Errors.PRODUCT_NO_STOCK_AVAILABLE.getCode(),
-					Errors.PRODUCT_NO_STOCK_AVAILABLE.getDescription());
-			log.severe(String.join(" ", storeException.getCode(), storeException.getDescription()));
-			throw storeException;
-		}
-		return response;
-	}
 
 	@Override
 	public Product saveProduct(Product product, CustomUser user) throws StoreException {
 		try {
 			IComplementABM complementABM = (object, id) -> {
 				Product productABM = (Product) object;
-				if (productABM.getId() == null) {
+				if (productABM.getId()==null ) {
 					return productABM.withUserRegistry(id).withDateRegistry(Instant.now().toDate());
 				} else {
 					return productABM.withUserModify(id).withDateModify(Instant.now().toDate());
@@ -156,5 +146,36 @@ public class ProductServiceImpl implements IProductService {
 			throw storeException;
 		}
 	}
+
+
+	
+	@Override
+	public Boolean hasStock(ProductModel productModel) throws StoreException {
+		Boolean response = Boolean.TRUE;
+		Product product = iProductRepository.findById(productModel.getIdProduct()).get();
+		if (product.getStock().compareTo(BigInteger.ZERO) <= 0) {
+			response = false;
+			StoreException storeException = new StoreException(Errors.PRODUCT_OUT_OF_STOCK.getCode(),
+					Errors.PRODUCT_OUT_OF_STOCK.getDescription());
+			log.severe(String.join(" ", storeException.getCode(), storeException.getDescription()));
+			throw storeException;
+		}
+		return response;
+	}
+
+	@Override
+	public Boolean hasAvaibleStock(ProductModel productModel) throws StoreException {
+		Boolean response = Boolean.TRUE;
+		Product product = iProductRepository.findById(productModel.getIdProduct()).get();
+		if (product.getStock().compareTo(productModel.getCount()) < 0) {
+			response = false;
+			StoreException storeException = new StoreException(Errors.PRODUCT_NO_STOCK_AVAILABLE.getCode(),
+					Errors.PRODUCT_NO_STOCK_AVAILABLE.getDescription());
+			log.severe(String.join(" ", storeException.getCode(), storeException.getDescription()));
+			throw storeException;
+		}
+		return response;
+	}
+
 
 }

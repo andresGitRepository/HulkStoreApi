@@ -14,6 +14,7 @@ import ar.com.todo1.auth.entities.User;
 import ar.com.todo1.auth.repositories.AuthorityRepository;
 import ar.com.todo1.auth.repositories.UserRepository;
 import ar.com.todo1.auth.servicies.UserServiceImpl;
+import ar.com.todo1.exceptions.StoreException;
 
 public class UserTest {
 
@@ -49,7 +50,7 @@ public class UserTest {
 	}
 
 	@Test
-	public void saveTest() {
+	public void saveTest() throws StoreException {
 		String email = "admin@admin.com";
 		User result = userServiceImpl.saveUser(user);
 		assertEquals(email, result.getEmail());

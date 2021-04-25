@@ -12,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import ar.com.todo1.auth.entities.CustomUser;
 import ar.com.todo1.auth.interfaces.IUserService;
@@ -28,7 +27,6 @@ import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-//@RequestMapping(value = "/products")
 public class ProductController {
 	private final IProductService IProductService;
 	private final ProductValidator productValidator;
@@ -50,6 +48,34 @@ public class ProductController {
 		return "pages/saleProducts";
 	}	
 
+	@GetMapping("/searchProducts")
+	public String searchProducts() {
+		return "pages/searchProduct";
+	}		
+	
+	@GetMapping("/newProducts")
+	public String newProducts() {
+		return "pages/newProduct";
+	}		
+
+	@GetMapping("/deleteProducts")
+	public String deleteProducts() {
+		return "pages/deleteProduct";
+	}		
+	
+
+	@PostMapping("/search")
+	public Product searchProduct(@Valid Integer idProduct, Authentication authentication, Model model) {
+		Product product=new Product();
+		try {
+			product = IProductService.searchProduct(idProduct);
+		} catch (StoreException exception) {
+			model.addAttribute("exception", exception);
+		}
+		model.addAttribute("user", IUserService.findByEmail(authentication.getName()).get());
+		return product;
+	}
+	
 	@PostMapping("/new")
 	public Product newProduct(@Valid Product product, Authentication authentication, Model model,
 			BindingResult bindingResult) {
@@ -71,8 +97,9 @@ public class ProductController {
 	}
 	
 	@PostMapping("/delete")
-	public Product deleteProduct(@Valid Product product, Authentication authentication, Model model,
-			BindingResult bindingResult) {
+	public Product deleteProduct(@Valid Integer idProduct, Authentication authentication, Model model,
+			BindingResult bindingResult) throws StoreException {
+		Product product = IProductService.searchProduct(idProduct);
 		productValidator.validate(product, bindingResult);
 		if (bindingResult.hasErrors()) {
 			List<String> dangers = bindingResult.getAllErrors().stream().map(erro -> erro.getCode())

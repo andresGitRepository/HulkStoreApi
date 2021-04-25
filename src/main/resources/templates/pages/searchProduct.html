@@ -44,5 +44,16 @@
         </div>
       </div>      
     </nav>
+	<form id="form-sign-up" class="form-signin" th:action="@{/search}" method="post">
+		<h1 class="h3 mb-3 font-weight-normal">Ingrese producto!</h1>
+		<label for="inputId" class="sr-only">Id Producto</label>
+		<input type="text" name="idProduct" class="form-control" placeholder="Id Producto">
+		<button class="btn btn-lg btn-primary btn-block" type="submit">Buscar</button>
+    </form>
+	<input th:if="${accept} != null" class="invisible" id="accept" th:value="${accept}"/>
+	<input th:each="danger : ${dangers}" class="invisible dangers" th:value="${danger}"/>
+	<input th:if="${success} != null" class="invisible" id="logout" th:value="${success}"/>
+	<input th:if="${error} != null" class="invisible" id="error" th:value="${error}"/>	
+   
 </body>
 </html>

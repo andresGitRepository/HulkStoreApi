@@ -1,6 +1,6 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title th:inline="text">Hulk Store App - Productos [[${@environment.getProperty('hulkstoreapi.version')}]]</title>
+	<title th:inline="text">Hulk Store App - Kardex [[${@environment.getProperty('hulkstoreapi.version')}]]</title>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<link rel="stylesheet" th:href="@{dist/bootstrap-4.0.0/css/bootstrap.css}">
@@ -36,13 +36,23 @@
       <div class="container">
         <div class="navbar-header">
 			<ul class="navbar-nav mr-auto">
-				<li class="nav-item"><a class="nav-link active" th:href="@{/searchProducts}">Buscar</a></li>
-				<li class="nav-item"><a class="nav-link" th:href="@{/allProducts}">Todos</a></li>
-				<li class="nav-item"><a class="nav-link" th:href="@{/newProducts}">Nuevo</a></li>
-				<li class="nav-item"><a class="nav-link" th:href="@{/deleteProducts}">Eliminar</a></li>
+				<li class="nav-item"><a class="nav-link active" th:href="@{/pageSearchKardex}">Buscar</a></li>
+				<li class="nav-item"><a class="nav-link" th:href="@{/allKardexs}">Todos</a></li>
 			</ul>
         </div>
       </div>      
-    </nav>
+    </nav>    
+    
+	<form id="form-sign-up" class="form-signin" th:action="@{/searchKardex}" method="post">
+		<h1 class="h3 mb-3 font-weight-normal">Ingrese Producto!</h1>
+		<label for="inputId" class="sr-only">Id Producto</label>
+		<input type="text" name="idProduct" class="form-control" placeholder="Id Producto">
+		<button class="btn btn-lg btn-primary btn-block" type="submit">Buscar</button>
+    </form>
+	<input th:if="${accept} != null" class="invisible" id="accept" th:value="${accept}"/>
+	<input th:each="danger : ${dangers}" class="invisible dangers" th:value="${danger}"/>
+	<input th:if="${success} != null" class="invisible" id="logout" th:value="${success}"/>
+	<input th:if="${error} != null" class="invisible" id="error" th:value="${error}"/>	
+   
 </body>
 </html>
