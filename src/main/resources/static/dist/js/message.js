@@ -11,11 +11,11 @@ function construirMensajeLogin(mensaje,tipo){
 			x: 50,
 			y: 50
 		},
-		newest_on_top: true,
+		newest_on_top: false,
 		type: tipo,
 		spacing: 10,
 		delay: 3000,
-		timer: 1000,
+		timer: 10000,
 		z_index: 2000
 	});
 }

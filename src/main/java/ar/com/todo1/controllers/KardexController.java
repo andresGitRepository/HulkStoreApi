@@ -1,6 +1,5 @@
 package ar.com.todo1.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -14,37 +13,61 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import ar.com.todo1.auth.interfaces.IUserService;
 import ar.com.todo1.entities.Kardex;
+import ar.com.todo1.enums.Errors;
 import ar.com.todo1.exceptions.StoreException;
 import ar.com.todo1.interfaces.IKardexService;
-import lombok.RequiredArgsConstructor;
+import ar.com.todo1.models.ProductModel;
 
 /*** @author Andres Gonzalez ***/
 
 @Controller
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class KardexController {
-	private final IKardexService iKardexService;
-	private final IUserService IUserService;
-	
+	@Autowired
+	private IKardexService iKardexService;
+	@Autowired
+	private IUserService IUserService;
+
 	@GetMapping("/kardex")
 	public String getKardex() {
 		return "pages/kardex";
 	}
-	
+
 	@GetMapping("/pageSearchKardex")
 	public String searchKardex() {
 		return "pages/searchKardex";
-	}	
-	
-	@PostMapping("/searchKardex")
-	public List<Kardex> searchKardexs(@Valid Integer idProduct, Authentication authentication, Model model) {
-		List<Kardex> kardex=new ArrayList<Kardex>();
-		try {
-			kardex = iKardexService.searchKardexProduct(idProduct);
-		} catch (StoreException exception) {
-			model.addAttribute("exception", exception);
-		}
-		model.addAttribute("user", IUserService.findByEmail(authentication.getName()).get());
-		return kardex;
 	}
+
+
+	@GetMapping("/allKardexs")
+	public String allProducts(Authentication authentication, Model model) {
+		try {
+			List<Kardex> kardexs = iKardexService.searchKardexs();
+			model.addAttribute("kardexs", kardexs);
+			model.addAttribute("user", IUserService.findByEmail(authentication.getName()).get());
+			return "pages/allKardexs";
+		} catch (Exception exception) {
+			StoreException storeException = new StoreException(exception, Errors.KARDEX_SEARCH.getCode(),
+					Errors.KARDEX_SEARCH.getDescription());
+			model.addAttribute("error", storeException.getDescription());
+			return "pages/allKardexs";
+		}
+	}
+	
+
+	@PostMapping("/searchKardexs")
+	public String searchProducts(@Valid ProductModel productModel, Authentication authentication, Model model) {
+		try {
+			List<Kardex> kardexs = iKardexService.searchKardexProduct(productModel.getIdProduct());
+			model.addAttribute("kardexs", kardexs);
+			model.addAttribute("user", IUserService.findByEmail(authentication.getName()).get());
+
+			return "pages/searchKardex";
+		} catch (Exception exception) {
+			StoreException storeException = new StoreException(exception, Errors.PRODUCT_SEARCH.getCode(),
+					Errors.PRODUCT_SEARCH.getDescription());
+			model.addAttribute("error", storeException.getDescription());
+			return "pages/searchKardex";
+		}		
+	}
+	
 }

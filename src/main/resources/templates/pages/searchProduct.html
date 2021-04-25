@@ -5,7 +5,10 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<link rel="stylesheet" th:href="@{dist/bootstrap-4.0.0/css/bootstrap.css}">
 	<script th:src="@{dist/bootstrap-4.0.0/js/bootstrap.js}"></script>
+	<script th:src="@{/dist/bootstrap-4.0.0/js/bootstrap-notify.js}"></script>
 	<script th:src="@{dist/jquery/dist/jquery.js}"></script>
+	<script th:src="@{/dist/js/message.js}"></script>
+	<script th:src="@{/dist/js/search.js}"></script>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="Hulk Store Api">
     <meta name="author" content="Andres Gonzalez">
@@ -44,11 +47,25 @@
         </div>
       </div>      
     </nav>
-	<form id="form-sign-up" class="form-signin" th:action="@{/search}" method="post">
-		<h1 class="h3 mb-3 font-weight-normal">Ingrese producto!</h1>
-		<label for="inputId" class="sr-only">Id Producto</label>
-		<input type="text" name="idProduct" class="form-control" placeholder="Id Producto">
-		<button class="btn btn-lg btn-primary btn-block" type="submit">Buscar</button>
+	<form id="form-search" class="form-search" >
+		<div class ="col-md-12 row">
+			<div class ="col-md-3"></div>
+			<div class ="col-md-6 box" >
+				<div class="card">
+				  <h4 class="card-header">Ingrese producto!</h4>
+				  <div class="card-body">
+				    <h5 class="card-title">Id Producto</h5>
+				    <div class="col-md-4 row">
+				    	<input type="text" name="id" class="form-control" placeholder="Id Producto">
+				    </div>
+					<div class ="col-md-3">
+						<span class="invisible" id="description"></span>
+					</div>				    
+				    <br><button class="btn btn-primary btn-search-product" type="button">Buscar</button>
+				  </div>
+				</div>	
+			</div>
+		</div>
     </form>
 	<input th:if="${accept} != null" class="invisible" id="accept" th:value="${accept}"/>
 	<input th:each="danger : ${dangers}" class="invisible dangers" th:value="${danger}"/>

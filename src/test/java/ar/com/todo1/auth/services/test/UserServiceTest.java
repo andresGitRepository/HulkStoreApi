@@ -16,7 +16,7 @@ import ar.com.todo1.auth.repositories.UserRepository;
 import ar.com.todo1.auth.servicies.UserServiceImpl;
 import ar.com.todo1.exceptions.StoreException;
 
-public class UserTest {
+public class UserServiceTest {
 
 	@Mock
 	private UserRepository userRepository;

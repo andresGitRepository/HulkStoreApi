@@ -16,147 +16,168 @@ import org.springframework.web.bind.annotation.PostMapping;
 import ar.com.todo1.auth.entities.CustomUser;
 import ar.com.todo1.auth.interfaces.IUserService;
 import ar.com.todo1.entities.Product;
+import ar.com.todo1.enums.Errors;
+import ar.com.todo1.enums.KardexType;
 import ar.com.todo1.exceptions.StoreException;
+import ar.com.todo1.interfaces.IKardexService;
 import ar.com.todo1.interfaces.IProductService;
 import ar.com.todo1.models.ProductModel;
 import ar.com.todo1.validators.ProductModelValidator;
 import ar.com.todo1.validators.ProductValidator;
-import lombok.RequiredArgsConstructor;
 
 /*** @author Andres Gonzalez ***/
 
 @Controller
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ProductController {
-	private final IProductService IProductService;
-	private final ProductValidator productValidator;
-	private final ProductModelValidator productModelValidator;
-	private final IUserService IUserService;
+	@Autowired
+	private IProductService iProductService;
+	@Autowired
+	private IKardexService iKardexService;	
+	@Autowired
+	private ProductValidator productValidator;
+	@Autowired
+	private ProductModelValidator productModelValidator;
+	@Autowired
+	private IUserService IUserService;
 
 	@GetMapping("/products")
 	public String initialProducts() {
 		return "pages/products";
 	}
-	
+
 	@GetMapping("/buys")
 	public String buyProducts() {
 		return "pages/buyProducts";
 	}
-	
+
 	@GetMapping("/sales")
 	public String saleProducts() {
 		return "pages/saleProducts";
-	}	
+	}
 
 	@GetMapping("/searchProducts")
-	public String searchProducts() {
-		return "pages/searchProduct";
-	}		
+	public String searchProducts(Authentication authentication, Model model) {
+		try {
+			return "pages/searchProduct";
+		} catch (Exception exception) {
+			StoreException storeException = new StoreException(exception, Errors.PRODUCT_SEARCH.getCode(),
+					Errors.PRODUCT_SEARCH.getDescription());
+			model.addAttribute("error", storeException.getDescription());
+			return "pages/searchProduct";
+		}		
+	}
 	
+	@GetMapping("/allProducts")
+	public String allProducts(Authentication authentication, Model model) {
+		try {
+			List<Product> products = iProductService.searchProducts();
+			model.addAttribute("products", products);
+			model.addAttribute("user", IUserService.findByEmail(authentication.getName()).get());
+			return "pages/allProducts";
+		} catch (Exception exception) {
+			StoreException storeException = new StoreException(exception, Errors.PRODUCT_SEARCH.getCode(),
+					Errors.PRODUCT_SEARCH.getDescription());
+			model.addAttribute("error", storeException.getDescription());
+			return "pages/allProducts";
+		}
+	}	
+
 	@GetMapping("/newProducts")
 	public String newProducts() {
 		return "pages/newProduct";
-	}		
+	}
 
 	@GetMapping("/deleteProducts")
 	public String deleteProducts() {
 		return "pages/deleteProduct";
-	}		
-	
-
-	@PostMapping("/search")
-	public Product searchProduct(@Valid Integer idProduct, Authentication authentication, Model model) {
-		Product product=new Product();
-		try {
-			product = IProductService.searchProduct(idProduct);
-		} catch (StoreException exception) {
-			model.addAttribute("exception", exception);
-		}
-		model.addAttribute("user", IUserService.findByEmail(authentication.getName()).get());
-		return product;
 	}
-	
+
+
+
 	@PostMapping("/new")
-	public Product newProduct(@Valid Product product, Authentication authentication, Model model,
+	public String newProduct(@Valid Product product, Authentication authentication, Model model,
 			BindingResult bindingResult) {
 		productValidator.validate(product, bindingResult);
 		if (bindingResult.hasErrors()) {
 			List<String> dangers = bindingResult.getAllErrors().stream().map(erro -> erro.getCode())
 					.collect(Collectors.toList());
 			model.addAttribute("dangers", dangers);
+			return "pages/newProduct";
 		}
 
 		try {
 			CustomUser user = (CustomUser) authentication;
-			product = IProductService.newProduct(product, user);
+			model.addAttribute("user", IUserService.findByEmail(authentication.getName()).get());
+			iProductService.newProduct(product, user);
+			return "pages/newProduct";
 		} catch (StoreException exception) {
-			model.addAttribute("exception", exception);
+			StoreException storeException = new StoreException(exception, Errors.PRODUCT_NEW.getCode(),
+					Errors.PRODUCT_NEW.getDescription());
+			model.addAttribute("error", storeException.getDescription());
+			return "pages/newProduct";
 		}
-		model.addAttribute("user", IUserService.findByEmail(authentication.getName()).get());
-		return product;
 	}
-	
-	@PostMapping("/delete")
-	public Product deleteProduct(@Valid Integer idProduct, Authentication authentication, Model model,
-			BindingResult bindingResult) throws StoreException {
-		Product product = IProductService.searchProduct(idProduct);
-		productValidator.validate(product, bindingResult);
-		if (bindingResult.hasErrors()) {
-			List<String> dangers = bindingResult.getAllErrors().stream().map(erro -> erro.getCode())
-					.collect(Collectors.toList());
-			model.addAttribute("dangers", dangers);
-		}
 
+	@PostMapping("/delete")
+	public String deleteProduct(@Valid ProductModel productModel, Authentication authentication, Model model,
+			BindingResult bindingResult) throws StoreException {
+		Product product = iProductService.searchProduct(productModel.getIdProduct()).get();
 		try {
 			CustomUser user = (CustomUser) authentication;
-			product = IProductService.deleteProduct(product, user);
+			product = iProductService.deleteProduct(product, user);
+			productModel.setCount(product.getStock());
+			iKardexService.insertKardex(productModel, KardexType.BORRADO);
+			return "pages/deleteProduct";
 		} catch (StoreException exception) {
 			model.addAttribute("exception", exception);
 		}
 		model.addAttribute("user", IUserService.findByEmail(authentication.getName()).get());
-		return product;
-	}	
+		return "pages/deleteProduct";
+	}
 
 	@PostMapping("/buy")
-	public Product buyProducts(@Valid ProductModel productModel, Authentication authentication, Model model,
+	public String buyProducts(@Valid ProductModel productModel, Authentication authentication, Model model,
 			BindingResult bindingResult) {
-		Product product=new Product();
 		productModelValidator.validate(productModel, bindingResult);
 		if (bindingResult.hasErrors()) {
 			List<String> dangers = bindingResult.getAllErrors().stream().map(erro -> erro.getCode())
 					.collect(Collectors.toList());
 			model.addAttribute("dangers", dangers);
+			return "pages/buyProducts";
 		}
 
 		try {
 			CustomUser user = (CustomUser) authentication;
-			product=IProductService.buyProduct(productModel, user);
+			iProductService.buyProduct(productModel, user);
+			model.addAttribute("user", IUserService.findByEmail(authentication.getName()).get());
+			return "pages/buyProducts";
 		} catch (StoreException exception) {
 			model.addAttribute("exception", exception);
+			return "pages/buyProducts";
 		}
-		model.addAttribute("user", IUserService.findByEmail(authentication.getName()).get());
-		return product;
+		
 	}
 
 	@PostMapping("/sale")
-	public Product saleProdcuts(@Valid ProductModel productModel, Authentication authentication, Model model,
+	public String saleProdcuts(@Valid ProductModel productModel, Authentication authentication, Model model,
 			BindingResult bindingResult) {
-		Product product=new Product();
 		productModelValidator.validate(productModel, bindingResult);
 		if (bindingResult.hasErrors()) {
 			List<String> dangers = bindingResult.getAllErrors().stream().map(erro -> erro.getCode())
 					.collect(Collectors.toList());
 			model.addAttribute("dangers", dangers);
+			return "pages/saleProducts";
 		}
 
 		try {
 			CustomUser user = (CustomUser) authentication;
-			product=IProductService.saleProduct(productModel, user);
+			iProductService.saleProduct(productModel, user);
+			model.addAttribute("user", IUserService.findByEmail(authentication.getName()).get());
+			return "pages/saleProducts";
 		} catch (StoreException exception) {
 			model.addAttribute("exception", exception);
+			return "pages/saleProducts";
 		}
-		model.addAttribute("user", IUserService.findByEmail(authentication.getName()).get());
-		return product;
 	}
 
 }

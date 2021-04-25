@@ -32,18 +32,36 @@
         </div>
       </div>
     </nav>
-	<form id="form-sign-up" class="form-signin" th:action="@{/sale}" method="post">
-		<h1 class="h3 mb-3 font-weight-normal">Ingrese Producto!</h1>
-		<label for="inputId" class="sr-only">Id Producto</label>
-		<input type="text" name="idProduct" class="form-control" placeholder="Id Producto">
-		<label for="inputCount" class="sr-only">Cantidad</label>
-		<input type="text" name="count" class="form-control" placeholder="Cantidad">
-		<button class="btn btn-lg btn-primary btn-block" type="submit">Vender</button>
+ 	<form id="form-sign-up" class="form-signin" th:action="@{/sale}" method="post">
+		<div class ="col-md-12 row">
+			<div class ="col-md-3"></div>
+			<div class ="col-md-6 box" >
+				<div class="card">
+				  <h4 class="card-header">Ingrese producto!</h4>
+				  <div class="card-body">
+				    <h5 class="card-title">Id Producto</h5>
+				    <div class="col-md-4 row">
+				    	<input type="text" name="idProduct" class="form-control" placeholder="Id Producto">
+				    </div>
+				    <h5 class="card-title">Cantidad</h5>
+				    <div class="col-md-4 row">
+				    	<input type="text" name="count" class="form-control" placeholder="Cantidad">
+				    </div>
+				    
+					<div class ="col-md-3">
+						<span class="invisible" id="description"></span>
+					</div>				    
+				    <br><button class="btn btn-lg btn-primary btn-block" type="submit">Vender</button>
+				  </div>
+				</div>	
+			</div>
+		</div>
     </form>
 	<input th:if="${accept} != null" class="invisible" id="accept" th:value="${accept}"/>
 	<input th:each="danger : ${dangers}" class="invisible dangers" th:value="${danger}"/>
 	<input th:if="${success} != null" class="invisible" id="logout" th:value="${success}"/>
 	<input th:if="${error} != null" class="invisible" id="error" th:value="${error}"/>	
+    
     
 </body>
 </html>

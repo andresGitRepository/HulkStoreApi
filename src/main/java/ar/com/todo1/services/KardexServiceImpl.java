@@ -61,7 +61,7 @@ public class KardexServiceImpl implements IKardexService {
 		try {
 			Kardex kardex = Kardex.builder().idProduct(productModel.getIdProduct()).description(type.getDescription())
 					.date(Instant.now().toDate()).build();
-			if (type.getCode().equals(KardexType.VENTA.getCode()))
+			if (type.getCode().equals(KardexType.VENTA.getCode()) || type.getCode().equals(KardexType.BORRADO.getCode()))
 				kardex.setCount(productModel.getCount().negate());
 			else
 				kardex.setCount(productModel.getCount());

@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -22,15 +23,14 @@ import ar.com.todo1.auth.interfaces.IUserService;
 import ar.com.todo1.auth.validators.UserValidator;
 import ar.com.todo1.enums.Errors;
 import ar.com.todo1.exceptions.StoreException;
-import lombok.extern.java.Log;
 
 /*** @author Andres Gonzalez ***/
 
-@Log
 @Controller
 public class LoginController {
-
+	@Autowired
 	private IUserService userService;
+	@Autowired
 	private UserValidator userValidator;
 
 	@GetMapping("/login")
@@ -72,13 +72,12 @@ public class LoginController {
 			}
 			userService.saveUser(user);
 			model.addAttribute("accept", new ResponseEntity<Void>(HttpStatus.CREATED));
-			return "initial/login";
+			return "initial/signup";
 		} catch (Exception exception) {
 			StoreException storeException = new StoreException(exception, Errors.USER_SAVE.getCode(),
 					Errors.USER_SAVE.getDescription());
-			log.severe(String.join(" ", storeException.getCode(), storeException.getDescription(),
-					storeException.getLocalizedMessage()));
-			throw storeException;
+			model.addAttribute("error", storeException.getDescription());
+			return "initial/signup";
 		}
 	}
 

@@ -2,6 +2,7 @@ package ar.com.todo1.services;
 
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.joda.time.Instant;
@@ -45,9 +46,12 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	@Override
-	public Product searchProduct(Integer idProduct) throws StoreException {
+	public Optional<Product> searchProduct(Integer idProduct) throws StoreException {
 		try {
-			return iProductRepository.findById(idProduct).get();
+			Optional <Product> product=iProductRepository.findById(idProduct);
+			if (!product.isPresent())
+				product= Optional.of(Product.builder().id(BigInteger.ZERO.intValue()).description("No existe").build());
+			return product;
 		} catch (Exception exception) {
 			StoreException storeException = new StoreException(exception, Errors.PRODUCT_SEARCH.getCode(),
 					Errors.PRODUCT_SEARCH.getDescription());

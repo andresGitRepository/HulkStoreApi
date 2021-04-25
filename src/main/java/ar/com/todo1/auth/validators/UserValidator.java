@@ -29,7 +29,7 @@ public class UserValidator implements Validator{
         
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "El email no puede estar vacio");
         if (user.getEmail().length() < 6 || user.getEmail().length() > 100 || user.getEmail().indexOf("@") <= 0) {
-            errors.rejectValue("user.email", "Email no aceptado");
+            errors.rejectValue("email", "Email no aceptado");
         }
         
         if (userServiceImpl.findByEmail(user.getEmail()).isPresent()) {
