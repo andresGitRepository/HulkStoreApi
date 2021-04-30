@@ -22,11 +22,11 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-@RequestMapping(value = "/Products")
+@RequestMapping(value = "/v1")
 public class ProductRestController {
 	private final IProductService iProductService;
 
-	@GetMapping("/getproducts")
+	@GetMapping("/products")
 	public List<Product> searchProducts(Authentication authentication) throws StoreException {
 		return iProductService.searchProducts();
 	}
