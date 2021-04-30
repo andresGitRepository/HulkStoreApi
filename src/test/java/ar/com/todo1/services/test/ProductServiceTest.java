@@ -1,6 +1,7 @@
 package ar.com.todo1.services.test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 import static org.mockito.ArgumentMatchers.any;
 
 import java.math.BigInteger;
@@ -30,8 +31,10 @@ public class ProductServiceTest {
 	private CustomUser USER = new CustomUser(null, null, null, 1, null);
 	private Optional<Product> PRODUCT = Optional.of(new Product());
 	private Optional<Product> PRODUCT_NULL = Optional.of(new Product());
+	private Product PRODUCT_EMPTY = null;
 	private List<Product> LIST_PRODUCT = new ArrayList<Product>();
 	private ProductModel PRODUCT_MODEL = new ProductModel();
+	private ProductModel PRODUCT_MODEL_NULL = null;
 	private static final Integer ID_PRODUCT = 1001;
 	private static final Integer ID_PRODUCT2 = 1002;
 	private static final String DESCRIPTIONS = "Puño Hulk";
@@ -56,31 +59,46 @@ public class ProductServiceTest {
 		PRODUCT = Optional.of(Product.builder().id(ID_PRODUCT).description(DESCRIPTIONS).stock(STOCK).price(PRICE)
 				.dateUnregistry(null).userUnregistry(null).userRegistry(USER.getId())
 				.dateRegistry(Instant.now().toDate()).build());
-		PRODUCT_NULL = Optional.of(Product.builder().id(BigInteger.ZERO.intValue()).description("No existe").build());
-
+		PRODUCT_NULL = Optional.of(Product.builder().id(ID_PRODUCT).description("No existe").build());
 		LIST_PRODUCT.add(PRODUCT.get());
 
 		PRODUCT_MODEL = ProductModel.builder().idProduct(ID_PRODUCT).count(COUNT).build();
 
 		Mockito.when(iKardexService.insertKardex(PRODUCT_MODEL, KardexType.INICIAL)).thenReturn(null);
 		Mockito.when(productRepository.save((Product) any())).thenReturn(PRODUCT.get());
+		Mockito.when(productRepository.save(PRODUCT_EMPTY)).thenReturn(PRODUCT_EMPTY);
 		Mockito.when(productRepository.findById(ID_PRODUCT)).thenReturn(PRODUCT);
 		Mockito.when(productRepository.findById(ID_PRODUCT2)).thenReturn(Optional.empty());
-		Mockito.when(productRepository.findAll()).thenReturn(LIST_PRODUCT);
+
 	}
 
 	@Test
 	public void searchProductsTest() throws StoreException {
+		Mockito.when(productRepository.findAll()).thenReturn(LIST_PRODUCT);
 		List<Product> response = productService.searchProducts();
 		assertEquals(response, LIST_PRODUCT);
+	}
+
+	@SuppressWarnings("unused")
+	@Test(expected = StoreException.class)
+	public void searchProductsErrorTest() throws StoreException {
+		LIST_PRODUCT = null;
+		Mockito.when(productRepository.findAll()).thenReturn(LIST_PRODUCT);
+		List<Product> response = productService.searchProducts();
+		fail();
 	}
 
 	@Test
 	public void searchProductTest() throws StoreException {
 		Optional<Product> response = productService.searchProduct(ID_PRODUCT);
-		Optional<Product> responseNull = productService.searchProduct(ID_PRODUCT2);
 		assertEquals(response, PRODUCT);
-		assertEquals(responseNull, PRODUCT_NULL);
+	}
+
+	@SuppressWarnings("unused")
+	@Test(expected = StoreException.class)
+	public void searchProductErrorTest() throws StoreException {
+		Optional<Product> responseEmpty = productService.searchProduct(ID_PRODUCT2);
+		fail();
 	}
 
 	@Test
@@ -89,10 +107,24 @@ public class ProductServiceTest {
 		assertEquals(response, PRODUCT.get());
 	}
 
+	@SuppressWarnings("unused")
+	@Test(expected = StoreException.class)
+	public void newProducErrorTest() throws StoreException {
+		Product response = productService.newProduct(PRODUCT_EMPTY, USER);
+		fail();
+	}
+
 	@Test
 	public void buyProductTest() throws StoreException {
 		Product response = productService.buyProduct(PRODUCT_MODEL, USER);
 		assertEquals(response, PRODUCT.get());
+	}
+
+	@SuppressWarnings("unused")
+	@Test(expected = StoreException.class)
+	public void buyProductErrorTest() throws StoreException {
+		Product response = productService.buyProduct(PRODUCT_MODEL_NULL, USER);
+		fail();
 	}
 
 	@Test
@@ -101,29 +133,32 @@ public class ProductServiceTest {
 		assertEquals(response, PRODUCT.get());
 	}
 
-//	@SuppressWarnings("unused")
-//	@Test
-//	public void hasAvaibleStockTest() throws StoreException {
-//		PRODUCT_MODEL.setCount(COUNT_EXCEEDS);
-//		Exception exception = productService.saleProduct(PRODUCT_MODEL, USER);
-//		assertEquals(exception.getMessage(), Errors.PRODUCT_SALE.getDescription());
-//	}
-//	
-//	@SuppressWarnings("unused")
-//	@Test
-//	public void hasStockTest() throws StoreException {
-//		PRODUCT.get().setStock(STOCK_CERO);
-//		Exception exception = productService.saleProduct(PRODUCT_MODEL, USER);
-//		assertEquals(exception.getMessage(), Errors.PRODUCT_SALE.getDescription());
-//	}
+	@SuppressWarnings("unused")
+	@Test(expected = StoreException.class)
+	public void saleProductErrorTest() throws StoreException {
+		Product response = productService.saleProduct(PRODUCT_MODEL_NULL, USER);
+		fail();
+	}
+
+	@Test(expected = StoreException.class)
+	public void hasAvaibleStockTest() throws StoreException {
+		PRODUCT_MODEL.setCount(COUNT_EXCEEDS);
+		productService.saleProduct(PRODUCT_MODEL, USER);
+		fail();
+	}
+
+	@Test(expected = StoreException.class)
+	public void hasStockTest() throws StoreException {
+		PRODUCT.get().setStock(STOCK_CERO);
+		productService.saleProduct(PRODUCT_MODEL, USER);
+		fail();
+	}
 
 	@Test
 	public void saveProductTest() throws StoreException {
 		Product response = productService.saveProduct(PRODUCT.get(), USER);
-		PRODUCT.get().setId(null);
-		PRODUCT.get().setUserRegistry(null);
-		PRODUCT.get().setDateRegistry(null);
-		Product responseNew = productService.saveProduct(PRODUCT.get(), USER);
+		PRODUCT_NULL.get().setId(null);
+		Product responseNew = productService.saveProduct(PRODUCT_NULL.get(), USER);
 		assertEquals(response, PRODUCT.get());
 		assertEquals(responseNew, PRODUCT.get());
 	}
@@ -132,5 +167,12 @@ public class ProductServiceTest {
 	public void deleteProductTest() throws StoreException {
 		Product response = productService.deleteProduct(PRODUCT.get(), USER);
 		assertEquals(response, PRODUCT.get());
+	}
+
+	@SuppressWarnings("unused")
+	@Test(expected = StoreException.class)
+	public void deleteProductErrorTest() throws StoreException {
+		Product response = productService.deleteProduct(PRODUCT_EMPTY, USER);
+		fail();
 	}
 }
