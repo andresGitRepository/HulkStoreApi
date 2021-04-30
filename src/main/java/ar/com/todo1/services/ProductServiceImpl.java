@@ -140,7 +140,9 @@ public class ProductServiceImpl implements IProductService {
 	@Override
 	public Product deleteProduct(Product product, CustomUser user) throws StoreException {
 		try {
-			product.withUserUnregistry(user.getId()).withDateUnregistry(Instant.now().toDate());
+//			product.withUserUnregistry(user.getId()).withDateUnregistry(Instant.now().toDate());
+			product.setUserUnregistry(user.getId());
+			product.setDateUnregistry(Instant.now().toDate());
 			return iProductRepository.save(product);
 		} catch (Exception exception) {
 			StoreException storeException = new StoreException(exception, Errors.PRODUCT_DELETE.getCode(),
